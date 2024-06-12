@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using racing_webApp.Data.Enum;
 
 namespace racing_webApp.Models
 {
