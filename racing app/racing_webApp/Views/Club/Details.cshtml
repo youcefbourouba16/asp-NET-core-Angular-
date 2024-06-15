@@ -1,0 +1,71 @@
+﻿@using static racing_webApp.Controllers.ClubController
+@model ClubViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<!-- Page Content -->
+<div class="container">
+
+    <!-- Portfolio Item Heading -->
+    <h1 class="my-4">
+        @Model.Club.Title
+    </h1>
+
+    <!-- Portfolio Item Row -->
+    <div class="row">
+
+        <div class="col-md-8">
+            <img class="img-fluid" src="@Model.Club.Image" alt="">
+        </div>
+
+        <div class="col-md-4">
+            <h3 class="my-3">Description</h3>
+            <p>@Model.Club.Description</p>
+            <h3 class="my-3">Club Details</h3>
+            <ul>
+                <li>city : @Model.Club.Address.City</li>
+                <li>State : @Model.Club.Address.State</li>
+                <li>Street : @Model.Club.Address.Street</li>
+                <li>Category :@Model.Club.ClubCategory</li>
+            </ul>
+        </div>
+
+    </div>
+    <!-- /.row -->
+    <!-- Related Projects Row -->
+    <h3 class="my-4">Related Projects</h3>
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+
+            <div class="row">
+
+                @foreach (var item in Model.RelatedClubs)
+                {
+                    <div class="col-md-4">
+                        <div class="card mb-4 box-shadow">
+                            <img class="card-img-top" src="@item.Image" width="100%" height="100%" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
+                            <div class="card-body">
+                                <p class="card-text">@item.Title</p>
+                                <p class="card-text">@item.Description</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a asp-controller="Club" asp-action="Details" asp-route-id="@item.Id"
+                                           type="button" class="btn btn-sm btn-outline-secondary">View</a>
+                                    </div>
+                                    <small class="text-muted">@item.ClubCategory</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+
+</div>
+<!-- /.container -->

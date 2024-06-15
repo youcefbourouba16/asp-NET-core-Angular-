@@ -1,21 +1,53 @@
-﻿@model IEnumerable<Race>
-
+﻿@using static racing_webApp.Controllers.RaceController
+@model RaceViewModel
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
 
+<!-- Page Content -->
+<div class="container">
 
-<main role="main">
+    <!-- Portfolio Item Heading -->
+    <h1 class="my-4">
+        @Model.Race.Title
+    </h1>
 
+    <!-- Portfolio Item Row -->
+    <div class="row">
+
+        <div class="col-md-8">
+            <img class="img-fluid" src="@Model.Race.Image" alt="">
+        </div>
+
+        <div class="col-md-4">
+            <h3 class="my-3">Description</h3>
+            <p>@Model.Race.Description</p>
+            <p>Category :@Model.Race.RaceCategory</p>
+            <h3 class="my-3">Club Details</h3>
+            <ul>
+                <li>city : @Model.Race.Address.City</li>
+                <li>State : @Model.Race.Address.State</li>
+                <li>Start Time : @Model.Race.StartTime</li>
+                <li>EntryFee : @Model.Race.EntryFee</li>
+                <li>Contact : @Model.Race.Contact</li>
+                
+                
+            </ul>
+        </div>
+
+    </div>
+    <!-- /.row -->
+    <!-- Related Projects Row -->
+    <h3 class="my-4">Related Projects</h3>
 
     <div class="album py-5 bg-light">
         <div class="container">
 
             <div class="row">
 
-                @foreach (var item in Model)
+                @foreach (var item in Model.RelatedRaces)
                 {
                     <div class="col-md-4">
                         <div class="card mb-4 box-shadow">
@@ -25,9 +57,8 @@
                                 <p class="card-text">@item.Description</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <a asp-controller="Race" asp-action="Details" asp-route-id="@item.Id"
+                                        <a asp-controller="Club" asp-action="Details" asp-route-id="@item.Id"
                                            type="button" class="btn btn-sm btn-outline-secondary">View</a>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
                                     </div>
                                     <small class="text-muted">@item.RaceCategory</small>
                                 </div>
@@ -38,7 +69,7 @@
             </div>
         </div>
     </div>
+    <!-- /.row -->
 
-</main>
-
-
+</div>
+<!-- /.container -->
