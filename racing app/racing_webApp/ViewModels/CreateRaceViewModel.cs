@@ -1,24 +1,24 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using racing_webApp.Data.Enum;
+using racing_webApp.Models;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using racing_webApp.Data.Enum;
-using static System.Net.Mime.MediaTypeNames;
 
-namespace racing_webApp.Models
+namespace racing_webApp.ViewModels
 {
-    public class Race
+    public class CreateRaceViewModel  
     {
-        private const string DefaultImageUrl = "https://media.istockphoto.com/id/143920084/photo/group-of-runners-in-a-cross-country-race.jpg?s=612x612&w=0&k=20&c=tIGYGDaKyM4qEs0RbXiAxt4WGGWcGRSTnS-T-lo750c=";
+
+
+
+
+       
         [Key]
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
 
-        private string? _image;
-        public string Image
-        {
-            get { return _image; }
-            set { _image = string.IsNullOrWhiteSpace(value) ? DefaultImageUrl : value; }
-        }
+
+        public IFormFile Image { get; set; }
         public DateTime? StartTime { get; set; }
         public int? EntryFee { get; set; }
         public string? Website { get; set; }
@@ -32,5 +32,6 @@ namespace racing_webApp.Models
         [ForeignKey("AppUser")]
         public string? AppUserId { get; set; }
         public AppUser? AppUser { get; set; }
+
     }
 }

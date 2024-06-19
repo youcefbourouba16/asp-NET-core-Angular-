@@ -71,6 +71,7 @@ namespace racing_webApp.Data
                             }
                         }
                     });
+
                     context.SaveChanges();
                 }
                 //Races

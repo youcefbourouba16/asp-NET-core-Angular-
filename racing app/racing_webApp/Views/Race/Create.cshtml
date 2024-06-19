@@ -1,0 +1,87 @@
+﻿@using racing_webApp.Data.Enum
+@using racing_webApp.ViewModels
+@model CreateRaceViewModel
+
+@*
+    
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<form class="container mt-5" method="post" asp-action="Create" enctype="multipart/form-data">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Create New Club</h4>
+        </div>
+        <div class="card-body">
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label">Club Title</label>
+                <input asp-for="Title" class="form-control" placeholder="Enter Title" maxlength="30">
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label">Description</label>
+                <textarea asp-for="Description" class="form-control" placeholder="Enter Description" rows="3"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Image" class="form-label">Club Image URL</label>
+                <input asp-for="Image" type="file" class="form-control" placeholder="Enter Image URL">
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="StartTime" class="form-label">Race entry fee :</label>
+                <input asp-for="StartTime" class="form-control" type="date" placeholder="Enter entry fee">
+                <span asp-validation-for="StartTime" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="EntryFee" class="form-label">Race entry fee :</label>
+                <input asp-for="EntryFee" class="form-control" type="number" placeholder="Enter entry fee">
+                <span asp-validation-for="EntryFee" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Website" class="form-label">web site :</label>
+                <input asp-for="Website" class="form-control" placeholder="Enter web site ">
+                <span asp-validation-for="Website" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Twitter" class="form-label">Twitter :</label>
+                <input asp-for="Twitter" class="form-control" placeholder="Enter Twitter ">
+                <span asp-validation-for="Twitter" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Facebook" class="form-label">facebook :</label>
+                <input asp-for="Facebook" class="form-control" placeholder="Enter facebook ">
+                <span asp-validation-for="Twitter" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Address.State" class="form-label">State</label>
+                <input asp-for="Address.State" class="form-control" placeholder="Enter State">
+                <span asp-validation-for="Address.State" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Address.City" class="form-label">City</label>
+                <input asp-for="Address.City" class="form-control" placeholder="Enter City">
+                <span asp-validation-for="Address.City" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Address.Street" class="form-label">Street</label>
+                <input asp-for="Address.Street" class="form-control" placeholder="Enter Street">
+                <span asp-validation-for="Address.Street" class="text-danger"></span>
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+
+        </div>
+        
+    </div>
+</form>

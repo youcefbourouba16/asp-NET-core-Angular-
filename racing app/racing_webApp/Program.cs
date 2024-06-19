@@ -1,5 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using racing_webApp.Data;
+using racing_webApp.Helpers;
+using racing_webApp.Inerfaces;
+using racing_webApp.Repository;
+using racing_webApp.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -8,7 +12,10 @@ builder.Services.AddDbContext<Db_context>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-
+builder.Services.AddScoped<IClubRepo, ClubRepo>();
+builder.Services.AddScoped<IRaceRepo, RaceRepo>();
+builder.Services.AddScoped<IphotoService, PhotoService>();
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
