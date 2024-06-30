@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using racing_webApp.Data;
 using racing_webApp.Inerfaces;
 using racing_webApp.Models;
 using racing_webApp.ViewModels;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace racing_webApp.Controllers
 {
@@ -81,6 +83,76 @@ namespace racing_webApp.Controllers
             };
             _clubRepo.Add(club);
             return RedirectToAction("Index");
+
+        }
+
+        
+        public async Task<IActionResult> Edit(int id)
+        {
+            Club vm =await _clubRepo.GetByIdAsyc(id);
+
+            var viewModel = new EditClubViewModel
+            {
+                Title = vm.Title,
+                Description = vm.Description,
+                imageUrl = vm.Image,
+                ClubCategory = vm.ClubCategory,
+                AppUserId = vm.AppUserId,
+                Address = new Address
+                {
+                    Street = vm.Address.Street,
+                    City = vm.Address.City,
+                    State = vm.Address.State,
+                }
+            };
+
+            return View(viewModel);
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditClubViewModel vm)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(vm);
+            }
+            var club = new Club
+            {
+                Title = vm.Title,
+                Description = vm.Description,
+                Id=vm.Id,
+                ClubCategory = vm.ClubCategory,
+                AppUserId = vm.AppUserId,
+                Address = new Address
+                {
+                    Street = vm.Address.Street,
+                    City = vm.Address.City,
+                    State = vm.Address.State,
+                }
+            };
+            if (vm.Image!=null)
+            {
+                try
+                {
+                    var result = await _photoService.AddphotoAsync(vm.Image);
+                    _photoService.DeletephotoAsync(vm.imageUrl);
+                    club.Image = result.Url.ToString();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+
+
+            }
+            else
+            {
+                club.Image = vm.imageUrl;
+            }
+            _clubRepo.Update(club);
+
+            return RedirectToAction("Index");
+
 
         }
     }
