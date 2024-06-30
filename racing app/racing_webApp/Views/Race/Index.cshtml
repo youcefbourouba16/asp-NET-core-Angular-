@@ -27,7 +27,8 @@
                                     <div class="btn-group">
                                         <a asp-controller="Race" asp-action="Details" asp-route-id="@item.Id"
                                            type="button" class="btn btn-sm btn-outline-secondary">View</a>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                        <a asp-controller="Race" asp-action="Edit" asp-route-id="@item.Id"
+                                            type="button" class="btn btn-sm btn-outline-secondary">Edit</a>
                                     </div>
                                     <small class="text-muted">@item.RaceCategory</small>
                                 </div>
