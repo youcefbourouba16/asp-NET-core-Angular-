@@ -1,7 +1,10 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using racing_webApp.Data;
 using racing_webApp.Helpers;
 using racing_webApp.Inerfaces;
+using racing_webApp.Models;
 using racing_webApp.Repository;
 using racing_webApp.Services;
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +19,12 @@ builder.Services.AddScoped<IClubRepo, ClubRepo>();
 builder.Services.AddScoped<IRaceRepo, RaceRepo>();
 builder.Services.AddScoped<IphotoService, PhotoService>();
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
+builder.Services.AddIdentity<AppUser, IdentityRole>()
+    .AddEntityFrameworkStores<Db_context>();
+builder.Services.AddMemoryCache();
+builder.Services.AddSession();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+       .AddCookie();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -28,7 +37,8 @@ if (!app.Environment.IsDevelopment())
 if (args.Length == 1 && args[0].ToLower() == "seeddata")
 {
     // todo: add sycn user and roles later
-    Seed.SeedData(app);
+    await Seed.SeedUsersAndRolesAsync(app);
+    //Seed.SeedData(app);
 }
 app.UseHttpsRedirection();
 app.UseStaticFiles();

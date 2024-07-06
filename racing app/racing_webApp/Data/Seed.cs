@@ -6,168 +6,212 @@ namespace racing_webApp.Data
 {
     public class Seed
     {
-        public static void SeedData(IApplicationBuilder applicationBuilder)
+        //public static void SeedData(IApplicationBuilder applicationBuilder)
+        //{
+        //    using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
+        //    {
+        //        var context = serviceScope.ServiceProvider.GetService<Db_context>();
+
+        //        context.Database.EnsureCreated();
+
+        //        if (!context.Clubs.Any())
+        //        {
+        //            context.Clubs.AddRange(new List<Club>()
+        //            {
+        //                new Club()
+        //                {
+        //                    Title = "Running Club 1",
+        //                    Image = "https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/running.jpg?quality=82&strip=1&resize=640%2C360",
+        //                    Description = "This is the description of the first cinema",
+        //                    ClubCategory = ClubCategory.City,
+        //                    Address = new Address()
+        //                    {
+        //                        Street = "123 Main St",
+        //                        City = "Charlotte",
+        //                        State = "NC"
+        //                    }
+        //                 },
+        //                new Club()
+        //                {
+        //                    Title = "Running Club 2",
+        //                    Image = "https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/running.jpg?quality=82&strip=1&resize=640%2C360",
+        //                    Description = "This is the description of the first cinema",
+        //                    ClubCategory = ClubCategory.Endurance,
+        //                    Address = new Address()
+        //                    {
+        //                        Street = "123 Main St",
+        //                        City = "Charlotte",
+        //                        State = "NC"
+        //                    }
+        //                },
+        //                new Club()
+        //                {
+        //                    Title = "Running Club 3",
+        //                    Image = "https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/running.jpg?quality=82&strip=1&resize=640%2C360",
+        //                    Description = "This is the description of the first club",
+        //                    ClubCategory = ClubCategory.Trail,
+        //                    Address = new Address()
+        //                    {
+        //                        Street = "123 Main St",
+        //                        City = "Charlotte",
+        //                        State = "NC"
+        //                    }
+        //                },
+        //                new Club()
+        //                {
+        //                    Title = "Running Club 3",
+        //                    Image = "https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/running.jpg?quality=82&strip=1&resize=640%2C360",
+        //                    Description = "This is the description of the first club",
+        //                    ClubCategory = ClubCategory.City,
+        //                    Address = new Address()
+        //                    {
+        //                        Street = "123 Main St",
+        //                        City = "Michigan",
+        //                        State = "NC"
+        //                    }
+        //                }
+        //            });
+
+        //            context.SaveChanges();
+        //        }
+        //        //Races
+        //        if (!context.Races.Any())
+        //        {
+        //            context.Races.AddRange(new List<Race>()
+        //            {
+        //                new Race()
+        //                {
+        //                    Title = "Running Race 1",
+        //                    Image = "https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/running.jpg?quality=82&strip=1&resize=640%2C360",
+        //                    Description = "This is the description of the first race",
+        //                    RaceCategory = RaceCategory.Marathon,
+        //                    Address = new Address()
+        //                    {
+        //                        Street = "123 Main St",
+        //                        City = "Charlotte",
+        //                        State = "NC"
+        //                    }
+        //                },
+        //                new Race()
+        //                {
+        //                    Title = "Running Race 2",
+        //                    Image = "https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/running.jpg?quality=82&strip=1&resize=640%2C360",
+        //                    Description = "This is the description of the first race",
+        //                    RaceCategory = RaceCategory.Ultra,
+        //                    AddressId = 5,
+        //                    Address = new Address()
+        //                    {
+        //                        Street = "123 Main St",
+        //                        City = "Charlotte",
+        //                        State = "NC"
+        //                    }
+        //                }
+        //            });
+        //            context.SaveChanges();
+        //        }
+        //    }
+        //}
+
+        public static async Task SeedUsersAndRolesAsync(IApplicationBuilder applicationBuilder)
         {
             using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
             {
-                var context = serviceScope.ServiceProvider.GetService<Db_context>();
+                // Roles
+                var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-                context.Database.EnsureCreated();
+                if (!await roleManager.RoleExistsAsync(UserRoles.Admin))
+                    await roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
+                if (!await roleManager.RoleExistsAsync(UserRoles.User))
+                    await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
 
-                if (!context.Clubs.Any())
+                // Users
+                var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+
+                // Admin User
+                string adminUserEmail = "teddysmithdeveloper@gmail.com";
+                var adminUser = await userManager.FindByEmailAsync(adminUserEmail);
+                if (adminUser == null)
                 {
-                    context.Clubs.AddRange(new List<Club>()
+                    var newAdminUser = new AppUser()
                     {
-                        new Club()
+                        UserName = "teddysmithdev",
+                        Email = adminUserEmail,
+                        EmailConfirmed = true,
+                        Address = new Address()
                         {
-                            Title = "Running Club 1",
-                            Image = "https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/running.jpg?quality=82&strip=1&resize=640%2C360",
-                            Description = "This is the description of the first cinema",
-                            ClubCategory = ClubCategory.City,
-                            Address = new Address()
-                            {
-                                Street = "123 Main St",
-                                City = "Charlotte",
-                                State = "NC"
-                            }
-                         },
-                        new Club()
-                        {
-                            Title = "Running Club 2",
-                            Image = "https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/running.jpg?quality=82&strip=1&resize=640%2C360",
-                            Description = "This is the description of the first cinema",
-                            ClubCategory = ClubCategory.Endurance,
-                            Address = new Address()
-                            {
-                                Street = "123 Main St",
-                                City = "Charlotte",
-                                State = "NC"
-                            }
-                        },
-                        new Club()
-                        {
-                            Title = "Running Club 3",
-                            Image = "https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/running.jpg?quality=82&strip=1&resize=640%2C360",
-                            Description = "This is the description of the first club",
-                            ClubCategory = ClubCategory.Trail,
-                            Address = new Address()
-                            {
-                                Street = "123 Main St",
-                                City = "Charlotte",
-                                State = "NC"
-                            }
-                        },
-                        new Club()
-                        {
-                            Title = "Running Club 3",
-                            Image = "https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/running.jpg?quality=82&strip=1&resize=640%2C360",
-                            Description = "This is the description of the first club",
-                            ClubCategory = ClubCategory.City,
-                            Address = new Address()
-                            {
-                                Street = "123 Main St",
-                                City = "Michigan",
-                                State = "NC"
-                            }
+                            Street = "123 Main St",
+                            City = "Charlotte",
+                            State = "NC"
                         }
-                    });
-
-                    context.SaveChanges();
+                    };
+                    await userManager.CreateAsync(newAdminUser, "Coding@1234?");
+                    await userManager.AddToRoleAsync(newAdminUser, UserRoles.Admin);
                 }
-                //Races
-                if (!context.Races.Any())
+
+                // App User
+                string appUserEmail = "user@etickets.com";
+                var appUser = await userManager.FindByEmailAsync(appUserEmail);
+                if (appUser == null)
                 {
-                    context.Races.AddRange(new List<Race>()
+                    var newAppUser = new AppUser()
                     {
-                        new Race()
+                        UserName = "app-user",
+                        Email = appUserEmail,
+                        EmailConfirmed = true,
+                        Address = new Address()
                         {
-                            Title = "Running Race 1",
-                            Image = "https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/running.jpg?quality=82&strip=1&resize=640%2C360",
-                            Description = "This is the description of the first race",
-                            RaceCategory = RaceCategory.Marathon,
-                            Address = new Address()
-                            {
-                                Street = "123 Main St",
-                                City = "Charlotte",
-                                State = "NC"
-                            }
-                        },
-                        new Race()
-                        {
-                            Title = "Running Race 2",
-                            Image = "https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/running.jpg?quality=82&strip=1&resize=640%2C360",
-                            Description = "This is the description of the first race",
-                            RaceCategory = RaceCategory.Ultra,
-                            AddressId = 5,
-                            Address = new Address()
-                            {
-                                Street = "123 Main St",
-                                City = "Charlotte",
-                                State = "NC"
-                            }
+                            Street = "123 Main St",
+                            City = "Charlotte",
+                            State = "NC"
                         }
-                    });
-                    context.SaveChanges();
+                    };
+                    await userManager.CreateAsync(newAppUser, "Coding@1234?");
+                    await userManager.AddToRoleAsync(newAppUser, UserRoles.User);
+                }
+
+                // Manager User
+                string managerUserEmail = "manager@etickets.com";
+                var managerUser = await userManager.FindByEmailAsync(managerUserEmail);
+                if (managerUser == null)
+                {
+                    var newManagerUser = new AppUser()
+                    {
+                        UserName = "manager-user",
+                        Email = managerUserEmail,
+                        EmailConfirmed = true,
+                        Address = new Address()
+                        {
+                            Street = "456 Maple St",
+                            City = "Charlotte",
+                            State = "NC"
+                        }
+                    };
+                    await userManager.CreateAsync(newManagerUser, "Managing@1234?");
+                    await userManager.AddToRoleAsync(newManagerUser, UserRoles.User);
+                }
+
+                // Support User
+                string supportUserEmail = "support@etickets.com";
+                var supportUser = await userManager.FindByEmailAsync(supportUserEmail);
+                if (supportUser == null)
+                {
+                    var newSupportUser = new AppUser()
+                    {
+                        UserName = "support-user",
+                        Email = supportUserEmail,
+                        EmailConfirmed = true,
+                        Address = new Address()
+                        {
+                            Street = "789 Elm St",
+                            City = "Charlotte",
+                            State = "NC"
+                        }
+                    };
+                    await userManager.CreateAsync(newSupportUser, "Support@1234?");
+                    await userManager.AddToRoleAsync(newSupportUser, UserRoles.Admin);
                 }
             }
         }
 
-        //public static async Task SeedUsersAndRolesAsync(IApplicationBuilder applicationBuilder)
-        //{
-        //    using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
-        //    {
-        //        //Roles
-        //        var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-
-        //        if (!await roleManager.RoleExistsAsync(UserRoles.Admin))
-        //            await roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
-        //        if (!await roleManager.RoleExistsAsync(UserRoles.User))
-        //            await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
-
-        //        //Users
-        //        var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
-        //        string adminUserEmail = "teddysmithdeveloper@gmail.com";
-
-        //        var adminUser = await userManager.FindByEmailAsync(adminUserEmail);
-        //        if (adminUser == null)
-        //        {
-        //            var newAdminUser = new AppUser()
-        //            {
-        //                UserName = "teddysmithdev",
-        //                Email = adminUserEmail,
-        //                EmailConfirmed = true,
-        //                Address = new Address()
-        //                {
-        //                    Street = "123 Main St",
-        //                    City = "Charlotte",
-        //                    State = "NC"
-        //                }
-        //            };
-        //            await userManager.CreateAsync(newAdminUser, "Coding@1234?");
-        //            await userManager.AddToRoleAsync(newAdminUser, UserRoles.Admin);
-        //        }
-
-        //        string appUserEmail = "user@etickets.com";
-
-        //        var appUser = await userManager.FindByEmailAsync(appUserEmail);
-        //        if (appUser == null)
-        //        {
-        //            var newAppUser = new AppUser()
-        //            {
-        //                UserName = "app-user",
-        //                Email = appUserEmail,
-        //                EmailConfirmed = true,
-        //                Address = new Address()
-        //                {
-        //                    Street = "123 Main St",
-        //                    City = "Charlotte",
-        //                    State = "NC"
-        //                }
-        //            };
-        //            await userManager.CreateAsync(newAppUser, "Coding@1234?");
-        //            await userManager.AddToRoleAsync(newAppUser, UserRoles.User);
-        //        }
-        //    }
-        //}
     }
 }
