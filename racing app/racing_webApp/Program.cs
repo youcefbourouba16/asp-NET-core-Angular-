@@ -6,7 +6,7 @@ using racing_webApp.Helpers;
 using racing_webApp.Inerfaces;
 using racing_webApp.Models;
 using racing_webApp.Repository;
-using racing_webApp.Services;
+using racing_webApp.Servicess;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -34,6 +34,7 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
 if (args.Length == 1 && args[0].ToLower() == "seeddata")
 {
     // todo: add sycn user and roles later
@@ -44,7 +45,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

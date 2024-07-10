@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using racing_webApp.Migrations;
 using racing_webApp.Models;
 
 namespace racing_webApp.Data
 {
-    public class Db_context : IdentityDbContext
+    public class Db_context : IdentityDbContext<AppUser>
     {
         public Db_context(DbContextOptions<Db_context> options) : base(options)
         {
