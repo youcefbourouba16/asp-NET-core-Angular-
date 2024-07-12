@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using racing_webApp.Data;
 using racing_webApp.Data.Enum;
+using racing_webApp.Extensions;
 using racing_webApp.Inerfaces;
 using racing_webApp.Models;
 using racing_webApp.Repository;
@@ -54,7 +55,14 @@ namespace racing_webApp.Controllers
 
         public IActionResult Create()
         {
-            return View();
+            string userId = HttpContext.User.GetUserIDAccessor();
+
+            CreateRaceViewModel vm = new CreateRaceViewModel()
+            {
+
+                AppUserId = userId
+            };
+            return View(vm);
         }
 
         [HttpPost]

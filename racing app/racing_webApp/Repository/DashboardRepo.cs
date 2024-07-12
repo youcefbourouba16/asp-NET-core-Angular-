@@ -1,4 +1,5 @@
 ﻿using racing_webApp.Data;
+using racing_webApp.Extensions;
 using racing_webApp.Inerfaces;
 using racing_webApp.Models;
 
@@ -16,15 +17,15 @@ namespace racing_webApp.Repository
         }
         public async Task<List<Club>> GetAllUserClubs()
         {
-            var currentUser = _httpContextAccesor.HttpContext?.User;
-            var userClubs = _context.Clubs.Where(r => r.AppUser.Id == currentUser.ToString());
+            var currentUser = _httpContextAccesor.HttpContext.User.GetUserIDAccessor();
+            var userClubs = _context.Clubs.Where(r => r.AppUserId == currentUser);
             return userClubs.ToList();
         }
 
         public async Task<List<Race>> GetAllUserRaces()
         {
-            var currentUser = _httpContextAccesor.HttpContext?.User;
-            var userRaces = _context.Races.Where(r => r.AppUser.Id == currentUser.ToString());
+            var currentUser = _httpContextAccesor.HttpContext?.User.GetUserIDAccessor();
+            var userRaces = _context.Races.Where(r => r.AppUser.Id == currentUser);
             return userRaces.ToList();
         }
     }

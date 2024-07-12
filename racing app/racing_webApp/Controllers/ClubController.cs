@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using racing_webApp.Data;
+using racing_webApp.Extensions;
 using racing_webApp.Inerfaces;
 using racing_webApp.Models;
 using racing_webApp.ViewModels;
@@ -15,6 +16,7 @@ namespace racing_webApp.Controllers
         
         private readonly IClubRepo _clubRepo;
         private readonly IphotoService _photoService;
+
 
         public ClubController(IClubRepo clubRepo, IphotoService photoService)
         {
@@ -54,8 +56,12 @@ namespace racing_webApp.Controllers
 
         public  IActionResult Create()
         {
-            
-            return View();
+            var cliendID = HttpContext.User.GetUserIDAccessor();
+            CreateClubViewModel vm = new CreateClubViewModel()
+            {
+                AppUserId = cliendID
+            };
+            return View(vm);
         }
 
         [HttpPost]

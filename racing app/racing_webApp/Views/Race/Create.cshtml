@@ -9,6 +9,7 @@
 @{
 }
 <form class="container mt-5" method="post" asp-action="Create" enctype="multipart/form-data">
+    <input name="AppUserId" id="AppUserId" type="hidden" value="@Model.AppUserId" />
     <div class="card shadow-sm">
         <div class="card-header bg-primary text-white">
             <h4 class="mb-0">Create New Club</h4>
@@ -44,19 +45,19 @@
             </div>
 
             <div class="mb-3">
-                <label asp-for="Website" class="form-label">web site :</label>
+                <label asp-for="Website" class="form-label">web site :(optional)</label>
                 <input asp-for="Website" class="form-control" placeholder="Enter web site ">
                 <span asp-validation-for="Website" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
-                <label asp-for="Twitter" class="form-label">Twitter :</label>
+                <label asp-for="Twitter" class="form-label">Twitter :(optional)</label>
                 <input asp-for="Twitter" class="form-control" placeholder="Enter Twitter ">
                 <span asp-validation-for="Twitter" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
-                <label asp-for="Facebook" class="form-label">facebook :</label>
+                <label asp-for="Facebook" class="form-label">facebook :(optional)</label>
                 <input asp-for="Facebook" class="form-control" placeholder="Enter facebook ">
                 <span asp-validation-for="Twitter" class="text-danger"></span>
             </div>
