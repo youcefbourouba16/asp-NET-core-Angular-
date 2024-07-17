@@ -1,4 +1,22 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿
+    document.addEventListener('DOMContentLoaded', function () {
+        @foreach(var item in Model)
+    {
+        <text>
+            addDivClickListener('C_@item.Id', 'b_@item.Id');
+        </text>
+    }
+                });
 
-// Write your JavaScript code.
+    function addDivClickListener(divId, buttonId) {
+            const myDiv = document.getElementById(divId);
+    const myButton = document.getElementById(buttonId);
+
+    if (myDiv && myButton) {
+        myDiv.addEventListener('click', function () {
+            myButton.click();
+        });
+            } else {
+        console.error('Element(s) not found. Please check the IDs.');
+            }
+        }

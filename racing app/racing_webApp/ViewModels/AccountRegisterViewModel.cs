@@ -2,7 +2,7 @@
 
 namespace racing_webApp.ViewModels
 {
-    public class UserRegisterViewModel
+    public class AccountRegisterViewModel
     {
         [Display(Name ="Email adresso")]
         [Required (ErrorMessage ="Email Adress required .")]

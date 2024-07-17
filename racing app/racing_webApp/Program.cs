@@ -19,6 +19,7 @@ builder.Services.AddScoped<IClubRepo, ClubRepo>();
 builder.Services.AddScoped<IRaceRepo, RaceRepo>();
 builder.Services.AddScoped<IphotoService, PhotoService>();
 builder.Services.AddScoped<IDashboardRepo, DashboardRepo>();
+builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 builder.Services.AddIdentity<AppUser, IdentityRole>()
     .AddEntityFrameworkStores<Db_context>();

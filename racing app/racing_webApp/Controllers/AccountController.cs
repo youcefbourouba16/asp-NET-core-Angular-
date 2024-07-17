@@ -30,7 +30,7 @@ namespace racing_webApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(UserLoginViewModel VM)
+        public async Task<IActionResult> Login(AccountLoginViewModel VM)
         {
             if (!ModelState.IsValid)
             {
@@ -56,7 +56,7 @@ namespace racing_webApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(UserRegisterViewModel VM)
+        public async Task<IActionResult> Register(AccountRegisterViewModel VM)
         {
             if (!ModelState.IsValid)
             {
