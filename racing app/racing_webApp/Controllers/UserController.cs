@@ -16,7 +16,7 @@ namespace racing_webApp.Controllers
         [Route("runners")]
         public async Task<IActionResult> Index()
         {
-            var User=await _userRepo.GetAllUsers();
+            var User=await _userRepo.GetAllUsers();//youcef
             List<UserViewModel> VMs = new List<UserViewModel>();
             foreach (var item in User)
             {
