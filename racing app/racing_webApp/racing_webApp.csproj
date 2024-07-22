@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\js\site.js" />
     <None Include="wwwroot\Resources\Image\Logo.png" />
   </ItemGroup>
 

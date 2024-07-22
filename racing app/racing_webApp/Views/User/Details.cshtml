@@ -1,0 +1,130 @@
+﻿@* For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860 *@
+@{
+}
+@using racing_webApp.ViewModels;
+@model UserDetailViewModel
+
+<div class="main-container">
+    <nav aria-label="breadcrumb" role="navigation" class="bg-primary text-white">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="#">Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="#">Runners</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Profile</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <section class="bg-white">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-8">
+                    <div class="media">
+                        <img alt="User avatar" src="" class="mr-md-5 avatar avatar-xlg">
+                        <div class="media-body">
+                            <div class="mb-3">
+                                <h1 class="h2 mb-2">@Model.UserName</h1>
+                                <span class="text-muted"><i class="icon-location"></i> </span>
+                            </div>
+                            <p class="text-muted">Pace: @Model.Pace</p>
+                            <p class="text-muted">Mileage: @Model.Milleage</p>
+                            <p>
+                                Bit of a go-getter me, creating lovely things that help others. You'll most often find me out back in the hammock, listening to tunes and bending pixels to my will.
+                            </p>
+                            <div>
+                                <button class="btn btn-outline-primary" data-toggle="button"><i class="icon-add-user"></i> Follow</button>
+                                <button class="btn btn-outline-primary">
+                                    <i class="icon-mail"></i>
+                                </button>
+                                <div class="dropdown d-inline-block">
+                                    <button class="btn btn-outline-primary dropdown-toggle dropdown-toggle-no-arrow" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="icon-dots-three-horizontal"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-sm" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#">Add to group</a>
+                                        <a class="dropdown-item" href="#">Share Profile</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#">Block</a>
+                                        <a class="dropdown-item" href="#">Report</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="flush-with-above space-0">
+        <div class="bg-white">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="races-tab" data-toggle="tab" href="#races" role="tab" aria-controls="races" aria-selected="true">Races</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="groups-tab" data-toggle="tab" href="#clubs" role="tab" aria-controls="clubs" aria-selected="false">Clubs</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="followers-tab" data-toggle="tab" href="#followers" role="tab" aria-controls="followers" aria-selected="false">Followers</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="flush-with-above">
+        <div class="tab-content">
+            <div class="tab-pane fade active show" id="races" role="tabpanel" aria-labelledby="races-tab">
+                <div class="container">
+                    <ul class="row feature-list feature-list-sm">
+                        <li class="col-12 col-md-6 col-lg-4">
+                            <div class="card">
+                                <a href="#">
+                                    <img class="card-img-top" src="/img/graphic-product-bench.jpg" alt="Card image cap">
+                                </a>
+                                <div class="card-body">
+                                    <a href="#">
+                                        <h4 class="card-title">Bench</h4>
+                                        <p class="card-text text-body">Accounting for creative people</p>
+                                    </a>
+                                </div>
+                                <div class="card-footer card-footer-borderless d-flex justify-content-between">
+                                    <div class="text-small">
+                                        <ul class="list-inline">
+                                            <li class="list-inline-item"><i class="icon-heart mr-1"></i> 373</li>
+                                            <li class="list-inline-item"><i class="icon-message mr-1"></i> 62</li>
+                                        </ul>
+                                    </div>
+                                    <div class="dropup">
+                                        <button class="btn btn-sm btn-outline-primary dropdown-toggle dropdown-toggle-no-arrow" type="button" id="BenchButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="icon-dots-three-horizontal"></i>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-sm" aria-labelledby="BenchButton">
+                                            <a class="dropdown-item" href="#">Save</a>
+                                            <a class="dropdown-item" href="#">Share</a>
+                                            <a class="dropdown-item" href="#">Comment</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Report</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <!--end of col-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using racing_webApp.Inerfaces;
+using racing_webApp.Models;
 using racing_webApp.Repository;
 using racing_webApp.ViewModels;
 
@@ -10,7 +12,7 @@ namespace racing_webApp.Controllers
     {
         private readonly IUserRepo _userRepo;
 
-        UserController(IUserRepo userRepo) {
+        public UserController(IUserRepo userRepo) {
             _userRepo= userRepo;
         }
         [Route("runners")]
@@ -26,9 +28,22 @@ namespace racing_webApp.Controllers
                     UserName=item.UserName,
                     Milleage=item.Mileage ?? 0
                 };
+                VMs.Add(VM);
 
             }
-            return View();
+            return View(VMs);
+        }
+        public async Task<IActionResult> Details(string id)
+        {
+            var user= await _userRepo.GetUserById(id);
+            UserDetailViewModel vm = new UserDetailViewModel()
+            {
+                id=user.Id,
+                UserName=user.UserName,
+                Milleage=user.Mileage,
+                Pace=user.Pace
+            };
+            return View(vm);
         }
     }
 }

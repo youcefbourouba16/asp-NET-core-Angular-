@@ -28,9 +28,9 @@ namespace racing_webApp.Repository
             return await _dbContext.Users.ToListAsync();
         }
 
-        public Task<AppUser> GetUserById(string id)
+        public async Task<AppUser> GetUserById(string id)
         {
-            throw new NotImplementedException();
+            return await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public bool Save()

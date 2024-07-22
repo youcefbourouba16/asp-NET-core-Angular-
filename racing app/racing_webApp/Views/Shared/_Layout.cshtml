@@ -5,9 +5,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - racing_webApp</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/theme.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/custom.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/entypo.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/socicon.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/RunGroopWebApp.styles.css" asp-append-version="true" />
+    <script src="https://kit.fontawesome.com/8aa18c8793.js" crossorigin="anonymous"></script>
+    @* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/racing_webApp.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/racing_webApp.styles.css" asp-append-version="true" /> *@
 </head>
 <body>
     <header>
@@ -44,8 +50,12 @@
                         else
                         {
                             <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Runners</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
                             </li>
+
                             <li class="nav-item ms-auto">
                                 <a class="btn btn-outline-danger" asp-area="" asp-controller="Account" asp-action="logout">Log-out</a>
                             </li>
@@ -68,9 +78,10 @@
             &copy; 2024 - racing_webApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/bootstrap.js"></script>
+    <script src="~/js/theme.js"></script>
+    <script src="~/js/custom.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
