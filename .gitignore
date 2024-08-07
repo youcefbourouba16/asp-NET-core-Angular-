@@ -362,3 +362,4 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /racing app/racing_webApp/appsettings.json
+/e-commerce/ShopingApi/ShopingApi/appsettings.json
