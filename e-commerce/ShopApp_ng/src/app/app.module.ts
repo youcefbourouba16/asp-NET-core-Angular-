@@ -8,13 +8,21 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { IndexComponent } from './components/index/index.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
+import { LogOutComponent } from './components/log-out/log-out.component';
 
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     IndexComponent,
-    SignUpComponent
+    SignUpComponent,
+    NavBarComponent,
+    LogOutComponent
   ],
   imports: [
     BrowserModule,
@@ -22,11 +30,19 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ['localhost:5019'], // Adjust to your backend domain
+        disallowedRoutes: ['localhost:5019/api/auth/login'], // Routes that shouldn't include the token
+      },
+    }),
   ],
   providers: [
     provideClientHydration(),
-    provideHttpClient(withFetch())
+    provideHttpClient(withFetch()),
+    JwtHelperService
   ],
   bootstrap: [AppComponent]
 })

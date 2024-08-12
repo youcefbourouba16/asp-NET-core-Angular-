@@ -47,14 +47,14 @@
                 id="confirmPassword"
                 class="form-control"
                 required
-                [(ngModel)]="vm.conPassword"
+                [(ngModel)]="vm.conffpassword"
                 name="confirmPassword"
                 #confirmPassword="ngModel"
-                [ngClass]="{'is-invalid': confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched) || (vm.password !== vm.conPassword && confirmPassword.dirty)}"
+                [ngClass]="{'is-invalid': confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched) || (vm.password !== vm.conffpassword && confirmPassword.dirty)}"
               />
               <div *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)" class="invalid-feedback">
                 <div *ngIf="confirmPassword.errors?.['required']">Confirm Password is required.</div>
-                <div *ngIf="vm.password !== vm.conPassword && confirmPassword.dirty">Passwords do not match.</div>
+                <div *ngIf="vm.password !== vm.conffpassword && confirmPassword.dirty">Passwords do not match.</div>
               </div>
             </div>
 

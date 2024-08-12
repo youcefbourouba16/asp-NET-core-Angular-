@@ -2,9 +2,13 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using ShopingApi.Data;
 using ShopingApi.Models;
 using ShopingApi.ViewModels;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace ShopingApi.Controllers
 {
@@ -13,17 +17,19 @@ namespace ShopingApi.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly Db_Context _db_context;
-
+        private readonly IConfiguration _configuration;
         public IActionResult Index()
         {
             return View();
         }
 
-        public AccountController(UserManager<AppUser> UserManager,SignInManager<AppUser> SignInManager,Db_Context Db_Context)
+        public AccountController(UserManager<AppUser> UserManager,SignInManager<AppUser> SignInManager,
+            Db_Context Db_Context,IConfiguration configuration)
         {
             _userManager = UserManager;
             _signInManager = SignInManager;
             _db_context = Db_Context;
+            _configuration = configuration;
         }
         [HttpPost]
         [Route("api/account/login")]
@@ -43,7 +49,9 @@ namespace ShopingApi.Controllers
                     var result = await _signInManager.PasswordSignInAsync(user, VM.Password, true, false);
                     if (result.Succeeded)
                     {
-                        return Ok(new { Message = "Login successful" });
+                        var token = GenerateJwtToken(user);
+                        return Ok(new { Token = token });
+
                     }
                 }
             }
@@ -76,7 +84,7 @@ namespace ShopingApi.Controllers
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(newAdminUser, VM.Role);
-                    return Ok(new { RedirectUrl = Url.Action("Index") });
+                    return Ok(new { Message = "User registered successfully" });
                 }
                 else
                 {
@@ -89,7 +97,26 @@ namespace ShopingApi.Controllers
                 return BadRequest(new { Error = "User already exists." });
             }
         }
+        private string GenerateJwtToken(IdentityUser user)
+        {
+            var claims = new[]
+            {
+            new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        };
 
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                issuer: _configuration["Jwt:Issuer"],
+                audience: _configuration["Jwt:Issuer"],
+                claims: claims,
+                expires: DateTime.Now.AddMinutes(30),
+                signingCredentials: creds);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
 
     }
 }

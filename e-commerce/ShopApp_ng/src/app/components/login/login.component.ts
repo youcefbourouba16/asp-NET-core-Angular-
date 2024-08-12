@@ -1,31 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component } from '@angular/core';
 import { AuthService } from '../../shared/auth.service';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
 import { AccountViewModel } from '../../Models/account-view-model';
 import { LoginResponse } from '../../Interfaces/login-response';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styles: ``
 })
-
-export class LoginComponent   {
+export class LoginComponent {
   vm: AccountViewModel = { email: '', password: '' };
   errorMessage: string | null = null;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit() {
     this.authService.login(this.vm).subscribe(
       (response: LoginResponse) => {
-        console.log('Login successful:', response);
-        // Handle successful login (e.g., redirect to a different page)
+        // Handle successful login response
+        console.log(response);
       },
-      (error) => {
-        console.error('Login failed:', error);
-        this.errorMessage = 'Login failed. Please check your username and password.';
+      (error: any) => {
+        // Handle login error
+        this.errorMessage = error.message || 'An error occurred during login';
       }
     );
   }

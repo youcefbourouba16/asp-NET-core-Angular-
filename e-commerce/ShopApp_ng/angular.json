@@ -36,7 +36,14 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "src/assets/fonts/icomoon/style.css",
+              "src/assets/css/bootstrap.min.css",
+              "src/assets/css/magnific-popup.css",
+              "src/assets/css/owl.carousel.min.css",
+              "src/assets/css/owl.theme.default.min.css",
+              "src/assets/css/aos.css",
+              "src/assets/css/style.css"
             ],
             "scripts": [],
             "server": "src/main.server.ts",

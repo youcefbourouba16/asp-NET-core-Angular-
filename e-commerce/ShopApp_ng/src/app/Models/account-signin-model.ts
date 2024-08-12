@@ -1,6 +1,6 @@
 export class AccountSigninModel {
     email: string | undefined;
     password: string | undefined;
-    conPassword: string | undefined;
+    conffpassword: string | undefined;
     role: string = "user";
 }
