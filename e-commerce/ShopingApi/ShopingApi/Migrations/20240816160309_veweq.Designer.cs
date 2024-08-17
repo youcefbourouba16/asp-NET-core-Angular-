@@ -12,8 +12,8 @@ using ShopingApi.Data;
 namespace ShopingApi.Migrations
 {
     [DbContext(typeof(Db_Context))]
-    [Migration("20240805164803_v1")]
-    partial class v1
+    [Migration("20240816160309_veweq")]
+    partial class veweq
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -223,6 +223,78 @@ namespace ShopingApi.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("ShopingApi.Models.Color", b =>
+                {
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("HexValue")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("ItemId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Name");
+
+                    b.HasIndex("ItemId");
+
+                    b.ToTable("Colors");
+                });
+
+            modelBuilder.Entity("ShopingApi.Models.Item", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("ImageURL")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Size")
+                        .HasMaxLength(50)
+                        .HasColumnType("int");
+
+                    b.Property<string>("productTypeId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Items");
+                });
+
+            modelBuilder.Entity("ShopingApi.Models.ProductType", b =>
+                {
+                    b.Property<string>("typeName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("typeName");
+
+                    b.ToTable("ProductTypes");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -272,6 +344,18 @@ namespace ShopingApi.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ShopingApi.Models.Color", b =>
+                {
+                    b.HasOne("ShopingApi.Models.Item", null)
+                        .WithMany("Colors")
+                        .HasForeignKey("ItemId");
+                });
+
+            modelBuilder.Entity("ShopingApi.Models.Item", b =>
+                {
+                    b.Navigation("Colors");
                 });
 #pragma warning restore 612, 618
         }

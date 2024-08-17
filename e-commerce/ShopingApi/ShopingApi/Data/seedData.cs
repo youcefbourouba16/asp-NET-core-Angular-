@@ -4,6 +4,7 @@ using ShopingApi.Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using ShopingApi.Enum;
 
 namespace ShopingApi.Data
 {
@@ -52,7 +53,78 @@ namespace ShopingApi.Data
                     }
                 }
 
-                await context.SaveChangesAsync();
+                if (!context.Colors.Any())
+                {
+                    context.Colors.AddRange(
+                        new Color
+                        {
+                            Name = "Red",
+                            HexValue = "#FF0000"
+                        },
+                        new Color
+                        {
+                            Name = "Blue",
+                            HexValue = "#0000FF"
+                        }
+                        );
+                    await context.SaveChangesAsync();
+                }
+                if (!context.ProductTypes.Any())
+                {
+                    context.ProductTypes.AddRange(
+                        new ProductType
+                        {
+                            typeName="Tshirt"
+                        }
+                        );
+                    await context.SaveChangesAsync();
+                }
+
+
+                // Seed Items
+                if (!context.Items.Any())
+                {
+                    var tshirtType = context.ProductTypes.FirstOrDefault(pt => pt.typeName == "Tshirt");
+
+                    context.Items.AddRange(
+                        new Item
+                        {
+                            Name = "Red T-Shirt",
+                            Description = "A plain red t-shirt.",
+                            Size = TshirtSize_enum.Medium,
+                            Colors = new List<Color>
+                            {
+                                context.Colors.FirstOrDefault(c => c.Name == "Red"),
+                                context.Colors.FirstOrDefault(c => c.Name == "Blue")
+                            },
+                            Quantity = 100,
+                            Price = 19.99m,
+                            productTypeId = tshirtType?.typeName,
+                            Category = Category_enum.Men,
+                            ImageURL = "https://assets.ajio.com/medias/sys_master/root/20240728/zX8C/66a561026f60443f31cb1911/-1117Wx1400H-462103471-red-MODEL.jpg"
+                        },
+                        new Item
+                        {
+                            Name = "Blue Jeans",
+                            Description = "Comfortable blue jeans.",
+                            Size = TshirtSize_enum.Medium,
+                            Colors = new List<Color>
+                            {
+                                context.Colors.FirstOrDefault(c => c.Name == "Red"),
+                                context.Colors.FirstOrDefault(c => c.Name == "Blue")
+                            },
+                            Quantity = 50,
+                            Price = 49.99m,
+                            productTypeId = tshirtType?.typeName,
+                            ImageURL = "https://cobbitaly.com/cdn/shop/products/NVFSRE4092NAVYBLUE_1.jpg?v=1665659100&width=2048",
+                            Category = Category_enum.Women,
+                        }
+                        // Add more items as needed
+                    );
+
+                    await context.SaveChangesAsync();
+                }
+
             }
         }
     }

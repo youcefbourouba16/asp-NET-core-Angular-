@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopingApi.Data;
 
@@ -11,9 +12,11 @@ using ShopingApi.Data;
 namespace ShopingApi.Migrations
 {
     [DbContext(typeof(Db_Context))]
-    partial class Db_ContextModelSnapshot : ModelSnapshot
+    [Migration("20240814120923_v11")]
+    partial class v11
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -220,6 +223,16 @@ namespace ShopingApi.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("ShopingApi.Models.Category", b =>
+                {
+                    b.Property<string>("CatName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("CatName");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("ShopingApi.Models.Color", b =>
                 {
                     b.Property<string>("Name")
@@ -227,15 +240,11 @@ namespace ShopingApi.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("HexValue")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("ItemId")
-                        .HasColumnType("int");
-
                     b.HasKey("Name");
-
-                    b.HasIndex("ItemId");
 
                     b.ToTable("Colors");
                 });
@@ -248,14 +257,19 @@ namespace ShopingApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Category")
-                        .HasColumnType("int");
+                    b.Property<string>("CategoryId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ColorId")
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("ImageURL")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -269,27 +283,24 @@ namespace ShopingApi.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Size")
-                        .HasMaxLength(50)
+                    b.Property<decimal>("SellPrice")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<int>("Sells")
                         .HasColumnType("int");
 
-                    b.Property<string>("productTypeId")
+                    b.Property<string>("Size")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("ColorId");
+
                     b.ToTable("Items");
-                });
-
-            modelBuilder.Entity("ShopingApi.Models.ProductType", b =>
-                {
-                    b.Property<string>("typeName")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("typeName");
-
-                    b.ToTable("ProductTypes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -343,16 +354,19 @@ namespace ShopingApi.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ShopingApi.Models.Color", b =>
-                {
-                    b.HasOne("ShopingApi.Models.Item", null)
-                        .WithMany("Colors")
-                        .HasForeignKey("ItemId");
-                });
-
             modelBuilder.Entity("ShopingApi.Models.Item", b =>
                 {
-                    b.Navigation("Colors");
+                    b.HasOne("ShopingApi.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId");
+
+                    b.HasOne("ShopingApi.Models.Color", "Color")
+                        .WithMany()
+                        .HasForeignKey("ColorId");
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Color");
                 });
 #pragma warning restore 612, 618
         }

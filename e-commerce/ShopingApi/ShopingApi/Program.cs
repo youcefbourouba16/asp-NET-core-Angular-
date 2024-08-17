@@ -3,17 +3,30 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ShopingApi.Data;
+using ShopingApi.Helper;
+using ShopingApi.Interfaces;
 using ShopingApi.Models;
+using ShopingApi.Repository;
+using ShopingApi.Services;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 // Configure the database context for Identity
 builder.Services.AddDbContext<Db_Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<IPhotoService, PhotoService>();
+builder.Services.AddScoped<IProductRepo, ProductRepo>();
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 
 // Configure Identity
 builder.Services.AddIdentity<AppUser, IdentityRole>(options =>

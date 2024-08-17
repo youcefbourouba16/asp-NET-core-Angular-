@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopingApi.Data;
 
@@ -11,9 +12,11 @@ using ShopingApi.Data;
 namespace ShopingApi.Migrations
 {
     [DbContext(typeof(Db_Context))]
-    partial class Db_ContextModelSnapshot : ModelSnapshot
+    [Migration("20240816140947_v99")]
+    partial class v99
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -220,6 +223,16 @@ namespace ShopingApi.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("ShopingApi.Models.Category", b =>
+                {
+                    b.Property<string>("CatName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("CatName");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("ShopingApi.Models.Color", b =>
                 {
                     b.Property<string>("Name")
@@ -280,16 +293,6 @@ namespace ShopingApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Items");
-                });
-
-            modelBuilder.Entity("ShopingApi.Models.ProductType", b =>
-                {
-                    b.Property<string>("typeName")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("typeName");
-
-                    b.ToTable("ProductTypes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

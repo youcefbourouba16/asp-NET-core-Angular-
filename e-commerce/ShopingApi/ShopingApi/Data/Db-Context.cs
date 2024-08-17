@@ -11,6 +11,8 @@ namespace ShopingApi.Data
         {
 
         }
-        public DbSet<AppUser> Clubs { get; set; }
+        public DbSet<ProductType> ProductTypes { get; set; }
+        public DbSet<Color> Colors { get;set; }
+        public DbSet<Item> Items { get;set; }
     }
 }
