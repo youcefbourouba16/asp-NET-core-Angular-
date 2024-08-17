@@ -29,7 +29,10 @@ namespace ShopingApi.Services
                 var uploadParams = new ImageUploadParams
                 {
                     File = new FileDescription(file.FileName, stream),
-                    Transformation = new Transformation().Height(500).Width(400).Crop("fill").Gravity("center")
+                    Transformation = new Transformation().Crop("fill").Gravity("auto")
+
+
+
                 };
                 uploadResult = await _cloundinary.UploadAsync(uploadParams);
             }
