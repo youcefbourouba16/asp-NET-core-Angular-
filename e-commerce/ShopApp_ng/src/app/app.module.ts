@@ -11,6 +11,7 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 import { LogOutComponent } from './components/log-out/log-out.component';
+import { ShopComponent } from './components/shop/shop.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -22,7 +23,8 @@ export function tokenGetter() {
     IndexComponent,
     SignUpComponent,
     NavBarComponent,
-    LogOutComponent
+    LogOutComponent,
+    ShopComponent
   ],
   imports: [
     BrowserModule,
