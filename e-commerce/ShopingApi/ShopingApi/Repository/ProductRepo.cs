@@ -1,7 +1,7 @@
 ﻿using ShopingApi.Data;
 using ShopingApi.Interfaces;
 using ShopingApi.Models;
-using ShopingApi.ViewModels;
+using ShopingApi.ViewModels.Product;
 
 namespace ShopingApi.Repository
 {
@@ -24,6 +24,7 @@ namespace ShopingApi.Repository
         {
             throw new NotImplementedException();
         }
+
 
         public bool Delete(int id)
         {
@@ -48,6 +49,25 @@ namespace ShopingApi.Repository
         public bool Update(CreateProductViewModel item)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task AddItemColors(List<Color> colors, int itemID)
+        {
+            foreach (var item in colors)
+            {
+                _context.ItemColors.AddRange(
+                        new ItemColors { ItemID = itemID, ColorId = item.Name });
+            }
+            Save();
+        }
+        public async Task AddItemSizes(List<Size> sizes, int itemID)
+        {
+            foreach (var item in sizes)
+            {
+                _context.ItemSizes.AddRange(
+                        new ItemSizes { ItemID = itemID, SizeID = item.size });
+            }
+            Save();
         }
     }
 }

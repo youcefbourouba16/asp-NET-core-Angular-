@@ -223,8 +223,7 @@ namespace ShopingApi.Migrations
             modelBuilder.Entity("ShopingApi.Models.Color", b =>
                 {
                     b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("HexValue")
                         .HasMaxLength(50)
@@ -248,8 +247,9 @@ namespace ShopingApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Category")
-                        .HasColumnType("int");
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
@@ -269,17 +269,41 @@ namespace ShopingApi.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Size")
-                        .HasMaxLength(50)
-                        .HasColumnType("int");
-
                     b.Property<string>("productTypeId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("productTypeId");
+
                     b.ToTable("Items");
+                });
+
+            modelBuilder.Entity("ShopingApi.Models.ItemColors", b =>
+                {
+                    b.Property<string>("ColorId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ItemID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ColorId", "ItemID");
+
+                    b.ToTable("ItemColors");
+                });
+
+            modelBuilder.Entity("ShopingApi.Models.ItemSizes", b =>
+                {
+                    b.Property<string>("SizeID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ItemID")
+                        .HasColumnType("int");
+
+                    b.HasKey("SizeID", "ItemID");
+
+                    b.ToTable("ItemSizes");
                 });
 
             modelBuilder.Entity("ShopingApi.Models.ProductType", b =>
@@ -290,6 +314,21 @@ namespace ShopingApi.Migrations
                     b.HasKey("typeName");
 
                     b.ToTable("ProductTypes");
+                });
+
+            modelBuilder.Entity("ShopingApi.Models.Size", b =>
+                {
+                    b.Property<string>("size")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("ItemId")
+                        .HasColumnType("int");
+
+                    b.HasKey("size");
+
+                    b.HasIndex("ItemId");
+
+                    b.ToTable("Sizes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -352,7 +391,27 @@ namespace ShopingApi.Migrations
 
             modelBuilder.Entity("ShopingApi.Models.Item", b =>
                 {
+                    b.HasOne("ShopingApi.Models.ProductType", "ProductType")
+                        .WithMany()
+                        .HasForeignKey("productTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProductType");
+                });
+
+            modelBuilder.Entity("ShopingApi.Models.Size", b =>
+                {
+                    b.HasOne("ShopingApi.Models.Item", null)
+                        .WithMany("Size")
+                        .HasForeignKey("ItemId");
+                });
+
+            modelBuilder.Entity("ShopingApi.Models.Item", b =>
+                {
                     b.Navigation("Colors");
+
+                    b.Navigation("Size");
                 });
 #pragma warning restore 612, 618
         }

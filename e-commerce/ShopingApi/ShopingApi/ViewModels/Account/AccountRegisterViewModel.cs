@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ShopingApi.ViewModels
+namespace ShopingApi.ViewModels.Account
 {
     public class AccountRegisterViewModel
     {

@@ -14,5 +14,8 @@ namespace ShopingApi.Data
         public DbSet<ProductType> ProductTypes { get; set; }
         public DbSet<Color> Colors { get;set; }
         public DbSet<Item> Items { get;set; }
+        public DbSet<Size> Sizes { get;set; }
+        public DbSet<ItemColors> ItemColors { get;set; }
+        public DbSet<ItemSizes> ItemSizes { get;set; }
     }
 }

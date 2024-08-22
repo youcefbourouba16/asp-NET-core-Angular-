@@ -12,8 +12,8 @@ using ShopingApi.Data;
 namespace ShopingApi.Migrations
 {
     [DbContext(typeof(Db_Context))]
-    [Migration("20240814120923_v11")]
-    partial class v11
+    [Migration("20240822130846_fsdfs")]
+    partial class fsdfs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -223,28 +223,21 @@ namespace ShopingApi.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("ShopingApi.Models.Category", b =>
-                {
-                    b.Property<string>("CatName")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("CatName");
-
-                    b.ToTable("Categories");
-                });
-
             modelBuilder.Entity("ShopingApi.Models.Color", b =>
                 {
                     b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("HexValue")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int?>("ItemId")
+                        .HasColumnType("int");
+
                     b.HasKey("Name");
+
+                    b.HasIndex("ItemId");
 
                     b.ToTable("Colors");
                 });
@@ -257,19 +250,15 @@ namespace ShopingApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CategoryId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ColorId")
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("ImageURL")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -283,24 +272,66 @@ namespace ShopingApi.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("SellPrice")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<int>("Sells")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Size")
+                    b.Property<string>("productTypeId")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("ColorId");
+                    b.HasIndex("productTypeId");
 
                     b.ToTable("Items");
+                });
+
+            modelBuilder.Entity("ShopingApi.Models.ItemColors", b =>
+                {
+                    b.Property<string>("ColorId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ItemID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ColorId", "ItemID");
+
+                    b.ToTable("ItemColors");
+                });
+
+            modelBuilder.Entity("ShopingApi.Models.ItemSizes", b =>
+                {
+                    b.Property<string>("SizeID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ItemID")
+                        .HasColumnType("int");
+
+                    b.HasKey("SizeID", "ItemID");
+
+                    b.ToTable("ItemSizes");
+                });
+
+            modelBuilder.Entity("ShopingApi.Models.ProductType", b =>
+                {
+                    b.Property<string>("typeName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("typeName");
+
+                    b.ToTable("ProductTypes");
+                });
+
+            modelBuilder.Entity("ShopingApi.Models.Size", b =>
+                {
+                    b.Property<string>("size")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("ItemId")
+                        .HasColumnType("int");
+
+                    b.HasKey("size");
+
+                    b.HasIndex("ItemId");
+
+                    b.ToTable("Sizes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -354,19 +385,36 @@ namespace ShopingApi.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("ShopingApi.Models.Color", b =>
+                {
+                    b.HasOne("ShopingApi.Models.Item", null)
+                        .WithMany("Colors")
+                        .HasForeignKey("ItemId");
+                });
+
             modelBuilder.Entity("ShopingApi.Models.Item", b =>
                 {
-                    b.HasOne("ShopingApi.Models.Category", "Category")
+                    b.HasOne("ShopingApi.Models.ProductType", "ProductType")
                         .WithMany()
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("productTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("ShopingApi.Models.Color", "Color")
-                        .WithMany()
-                        .HasForeignKey("ColorId");
+                    b.Navigation("ProductType");
+                });
 
-                    b.Navigation("Category");
+            modelBuilder.Entity("ShopingApi.Models.Size", b =>
+                {
+                    b.HasOne("ShopingApi.Models.Item", null)
+                        .WithMany("Size")
+                        .HasForeignKey("ItemId");
+                });
 
-                    b.Navigation("Color");
+            modelBuilder.Entity("ShopingApi.Models.Item", b =>
+                {
+                    b.Navigation("Colors");
+
+                    b.Navigation("Size");
                 });
 #pragma warning restore 612, 618
         }

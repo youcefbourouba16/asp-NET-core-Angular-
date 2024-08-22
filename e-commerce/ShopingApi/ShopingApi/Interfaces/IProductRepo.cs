@@ -1,6 +1,6 @@
 ﻿using ShopingApi.Data;
 using ShopingApi.Models;
-using ShopingApi.ViewModels;
+using ShopingApi.ViewModels.Product;
 
 namespace ShopingApi.Interfaces
 {
@@ -14,5 +14,8 @@ namespace ShopingApi.Interfaces
         bool Delete(int id);
         bool Update(CreateProductViewModel item);
         bool Save();
+
+        Task AddItemColors(List<Color> colors,int itemID);
+        Task AddItemSizes(List<Size> sizes,int itemID);
     }
 }

@@ -80,50 +80,84 @@ namespace ShopingApi.Data
                     await context.SaveChangesAsync();
                 }
 
+                if (!context.Sizes.Any())
+                {
+                    context.Sizes.AddRange(
+                        new Size
+                        {
+                            size = TshirtSize_enum.Large.ToString()
+                        },
+                        new Size
+                        {
+                            size = TshirtSize_enum.Medium.ToString()
+                        },
+                        new Size
+                        {
+                            size = TshirtSize_enum.Small.ToString()
+                        },
+                        new Size
+                        {
+                            size = TshirtSize_enum.ExtraLarge.ToString()
+                        });
 
-                // Seed Items
+
+                    await context.SaveChangesAsync();
+                }
+
                 if (!context.Items.Any())
                 {
                     var tshirtType = context.ProductTypes.FirstOrDefault(pt => pt.typeName == "Tshirt");
 
-                    context.Items.AddRange(
-                        new Item
-                        {
-                            Name = "Red T-Shirt",
-                            Description = "A plain red t-shirt.",
-                            Size = TshirtSize_enum.Medium,
-                            Colors = new List<Color>
-                            {
-                                context.Colors.FirstOrDefault(c => c.Name == "Red"),
-                                context.Colors.FirstOrDefault(c => c.Name == "Blue")
-                            },
-                            Quantity = 100,
-                            Price = 19.99m,
-                            productTypeId = tshirtType?.typeName,
-                            Category = Category_enum.Men,
-                            ImageURL = "https://assets.ajio.com/medias/sys_master/root/20240728/zX8C/66a561026f60443f31cb1911/-1117Wx1400H-462103471-red-MODEL.jpg"
-                        },
-                        new Item
-                        {
-                            Name = "Blue Jeans",
-                            Description = "Comfortable blue jeans.",
-                            Size = TshirtSize_enum.Medium,
-                            Colors = new List<Color>
-                            {
-                                context.Colors.FirstOrDefault(c => c.Name == "Red"),
-                                context.Colors.FirstOrDefault(c => c.Name == "Blue")
-                            },
-                            Quantity = 50,
-                            Price = 49.99m,
-                            productTypeId = tshirtType?.typeName,
-                            ImageURL = "https://cobbitaly.com/cdn/shop/products/NVFSRE4092NAVYBLUE_1.jpg?v=1665659100&width=2048",
-                            Category = Category_enum.Women,
-                        }
-                        // Add more items as needed
+                    var redColor = context.Colors.FirstOrDefault(c => c.Name == "Red");
+                    var blueColor = context.Colors.FirstOrDefault(c => c.Name == "Blue");
+
+                    var smallSize = context.Sizes.FirstOrDefault(c => c.size == TshirtSize_enum.Small.ToString());
+                    var largeSize = context.Sizes.FirstOrDefault(c => c.size == TshirtSize_enum.Large.ToString());
+
+                    var redTshirt = new Item
+                    {
+                        Name = "Red T-Shirt",
+                        Description = "A plain red t-shirt.",
+                        Quantity = 100,
+                        Price = 19.99m,
+                        productTypeId = tshirtType?.typeName,
+                        Category = Category_enum.Men.ToString(),
+                        ImageURL = "https://assets.ajio.com/medias/sys_master/root/20240728/zX8C/66a561026f60443f31cb1911/-1117Wx1400H-462103471-red-MODEL.jpg"
+                    };
+
+                    var blueJeans = new Item
+                    {
+                        Name = "Blue Jeans",
+                        Description = "Comfortable blue jeans.",
+                        Quantity = 50,
+                        Price = 49.99m,
+                        productTypeId = tshirtType?.typeName,
+                        
+                        Category =Category_enum.Women.ToString(),
+                        ImageURL = "https://cobbitaly.com/cdn/shop/products/NVFSRE4092NAVYBLUE_1.jpg?v=1665659100&width=2048"
+                    };
+
+                    context.Items.AddRange(redTshirt, blueJeans);
+                    await context.SaveChangesAsync();  // Save changes to get generated itemID
+
+                    // After saving, redTshirt.itemID and blueJeans.itemID are populated
+                    context.ItemColors.AddRange(
+                        new ItemColors { ItemID = redTshirt.Id, ColorId = redColor.Name },
+                        new ItemColors { ItemID = redTshirt.Id, ColorId = blueColor.Name },
+                        new ItemColors { ItemID = blueJeans.Id, ColorId = redColor.Name },
+                        new ItemColors { ItemID = blueJeans.Id, ColorId = blueColor.Name }
+                    );
+
+                    context.ItemSizes.AddRange(
+                        new ItemSizes { ItemID = redTshirt.Id, SizeID = smallSize.size },
+                        new ItemSizes { ItemID = redTshirt.Id, SizeID = largeSize.size },
+                        new ItemSizes { ItemID = blueJeans.Id, SizeID = smallSize.size },
+                        new ItemSizes { ItemID = blueJeans.Id, SizeID = largeSize.size }
                     );
 
                     await context.SaveChangesAsync();
                 }
+
 
             }
         }

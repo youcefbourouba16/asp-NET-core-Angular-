@@ -5,6 +5,7 @@ using ShopingApi.Data;
 using ShopingApi.Interfaces;
 using ShopingApi.Models;
 using ShopingApi.ViewModels;
+using ShopingApi.ViewModels.Product;
 using System.Net;
 
 namespace ShopingApi.Controllers
@@ -30,16 +31,18 @@ namespace ShopingApi.Controllers
         [Route("api/Product/getProduct")]
         public async Task<ActionResult<IEnumerable<Item>>> GetProducts()
         {
-
             var items = await _context.Items
-                 .Include(i => i.Category)    
-                 .ToListAsync();
+                .Include(i => i.Size)     // Assuming Size is a navigation property
+                .Include(i => i.Colors)   // Assuming Colors is a navigation property
+                .Include(i => i.ProductType) // Include the ProductType if it's a navigation property
+                .ToListAsync();
+
             if (items == null || !items.Any())
             {
                 return NoContent(); // Returns 204 No Content
             }
+
             return Ok(items);
-            
         }
 
         [HttpGet]
@@ -59,6 +62,7 @@ namespace ShopingApi.Controllers
 
             return Ok(products);
         }
+        
 
         [HttpPost]
         [Route("api/Product/CreateProduct")]
@@ -68,26 +72,43 @@ namespace ShopingApi.Controllers
             {
                 return BadRequest(ModelState);  // Changed View to BadRequest for API response
             }
-
+            
             var result = await _photoService.AddphotoAsync(vm.Image);
+            
+            List<Color> colors = _context.Colors
+                .Where(c => vm.Colors.Contains(c.Name))
+                .ToList();
 
+            List<Size> sizes = _context.Sizes
+                .Where(c => vm.Size.Contains(c.size))
+                .ToList();
             var item = new Item
             {
                 Name = vm.Name,
                 Description = vm.Description,
-                Size = vm.Size,
-                Colors = vm.Colors,
+                Size = sizes,
+                Colors = colors,
                 Quantity = vm.Quantity,
                 Price = vm.Price,
                 ImageURL = result.Url.ToString(),
                 productTypeId=vm.ProductTypeId,
-                Category = vm.Category
+                Category = vm.Category.ToString(),
             };
-
+            
             _productRepo.Add(item);
+            _productRepo.AddItemColors(colors, item.Id);
+            _productRepo.AddItemSizes(sizes, item.Id);
 
             return Ok(item);  // Return the created item as the response
-        }
+            }
+            [HttpPost]
+            [Route("api/Product/COlors")]
+            public async Task<IActionResult> Create([FromForm] List<Color> vm)
+            {
+            
+
+                return Ok(vm);  // Return the created item as the response
+            }
 
 
     }

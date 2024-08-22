@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using ShopingApi.Data;
 using ShopingApi.Helper;
 using ShopingApi.Interfaces;
@@ -75,6 +77,10 @@ builder.Services.AddCors(options => options.AddPolicy(name: "FrontendUI",
 
     ));
 
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.MultipartBodyLengthLimit = 104857600; // Set your limit
+});
 var app = builder.Build();
 app.UseCors("FrontendUI");  
 using (var scope = app.Services.CreateScope())
