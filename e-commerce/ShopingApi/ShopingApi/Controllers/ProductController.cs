@@ -62,7 +62,59 @@ namespace ShopingApi.Controllers
 
             return Ok(products);
         }
-        
+
+        [HttpGet]
+        [Route("api/Product/getProductDetails/{id}")]
+        public async Task<ActionResult<ProductDetails>> GetProductDetailsByID(int id)
+        {
+            List<Color> colors = await _context.ItemColors
+                        .Where(ic => ic.ItemID == id)
+                        .Join(
+                            _context.Colors,
+                            ic => ic.ColorId,
+                            c => c.Name,
+                            (ic, c) => c
+                        )
+                        .ToListAsync();
+
+
+
+            List<Size> sizes = await _context.ItemSizes
+                        .Where(ic => ic.ItemID == id)
+                        .Join(
+                            _context.Sizes,
+                            ic => ic.SizeID,
+                            c => c.size,
+                            (ic, c) => c
+                        )
+                        .ToListAsync();
+            var product = await _context.Items
+                .Where(p => p.Id == id)
+                .Include(p => p.ProductType) // Include ProductType if needed
+                .Select(p => new ProductDetails
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Description = p.Description,
+                    Size =sizes,
+                    Colors = colors,
+                    Quantity = p.Quantity,
+                    Price = p.Price,
+                    ImageURL = p.ImageURL,
+                    ProductType = p.ProductType.typeName, // Assuming you only need the name of ProductType
+                    Category = p.Category
+                })
+                .FirstOrDefaultAsync();
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(product);
+        }
+
+
 
         [HttpPost]
         [Route("api/Product/CreateProduct")]
@@ -100,15 +152,8 @@ namespace ShopingApi.Controllers
             _productRepo.AddItemSizes(sizes, item.Id);
 
             return Ok(item);  // Return the created item as the response
-            }
-            [HttpPost]
-            [Route("api/Product/COlors")]
-            public async Task<IActionResult> Create([FromForm] List<Color> vm)
-            {
+        }
             
-
-                return Ok(vm);  // Return the created item as the response
-            }
 
 
     }

@@ -14,6 +14,10 @@ export class ProductService {
   getProductNamesAndPrices(): Observable<ProductViewModel[]> {
     return this.http.get<ProductViewModel[]>(`${this.apiGetProductView}/getProductView`);
   }
+
+  getProductByID(ID : any) : Observable<any>{
+    return this.http.get<ProductViewModel[]>(`${this.apiGetProductView}/getProductView`);
+  }
   
 
 }

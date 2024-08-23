@@ -5,5 +5,6 @@ export class ProductViewModel {
     name: string | undefined;
     category: string | undefined;
     price: number | undefined;
-    imageURL : string | undefined
+    imageURL : string | undefined;
+
 }

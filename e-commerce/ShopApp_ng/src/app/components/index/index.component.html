@@ -101,19 +101,22 @@
       <div class="row">
         <div class="col-md-12" >
           <div class="nonloop-block-3 owl-carousel" >
-            <div class="item" *ngFor="let product of products" >
-              <div class="block-4 text-center">
-                <figure class="block-4-image">
-                  <img style="height: 246px;" [src]="product.imageURL" alt="Image placeholder" class="img-fluid">
-
-                </figure>
-                <div class="block-4-text p-4">
-                  <h3><a href="#">{{product.name}}</a></h3>
-                  <p class="mb-0">{{product.category}}</p>
-                  <p class="text-primary font-weight-bold">${{product.price}}</p>
+            <ng-container *ngFor="let product of products">
+              <div class="item"  >
+                <div class="block-4 text-center">
+                  <figure class="block-4-image">
+                    <img style="height: 246px;" [src]="product.imageURL" alt="Image placeholder" class="img-fluid">
+  
+                  </figure>
+                  <div class="block-4-text p-4">
+                    <h3><a href="#">{{product.name}}</a></h3>
+                    <p class="mb-0">{{product.category}}</p>
+                    <p class="text-primary font-weight-bold">${{product.price}}</p>
+                  </div>
                 </div>
               </div>
-            </div>
+            </ng-container>
+            
 
             
           </div>

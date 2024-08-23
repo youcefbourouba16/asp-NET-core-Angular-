@@ -13,7 +13,6 @@ import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 import { LogOutComponent } from './components/log-out/log-out.component';
 import { ShopComponent } from './components/shop/shop.component';
 import { DetailsComponent } from './components/details/details.component';
-import { AddColorComponent } from './components/add-color/add-color.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
