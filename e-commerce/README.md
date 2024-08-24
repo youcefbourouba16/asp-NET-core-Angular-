@@ -1,15 +1,24 @@
+Here's an updated version of your project setup to reflect the use of Entity Framework Core for authentication:
+
+---
 
 # Project Name
 
 ## Overview
+![1](https://github.com/user-attachments/assets/f91019dc-577e-4ce2-b1ce-46045eb6d8fe)
+![2](https://github.com/user-attachments/assets/60ca8c5a-7ef2-4351-9505-f280fd271e17)
 
-This project is a web application built using Angular, ASP.NET Core, and SQL Server. The frontend is powered by Angular 16.2.14, while the backend is developed with the latest version of ASP.NET Core, utilizing Entity Framework Core for database interactions.
+![3](https://github.com/user-attachments/assets/764d3f05-2b48-4fda-a79e-06342050802f)
+![4](https://github.com/user-attachments/assets/94e4966f-ec33-4031-88ee-1e0dbc7da0cc)
+
+This project is a web application built using Angular, ASP.NET Core, and SQL Server. The frontend is powered by Angular 16.2.14, while the backend is developed with the latest version of ASP.NET Core, utilizing Entity Framework Core for both database interactions and authentication.
 
 ## Features
 
 - **Frontend:** Angular 16.2.14
 - **Backend:** ASP.NET Core (latest version)
 - **Database:** SQL Server with Entity Framework Core
+- **Authentication:** Entity Framework Core for user management and authentication
 - **Node.js:** Version 20
 
 ## Prerequisites
@@ -33,7 +42,7 @@ Ensure you have the following installed on your development machine:
 
 2. **Set up `app.config` and `appsettings.json`:**
 
-   Ensure you have configured the `app.config` and `appsettings.json` files with the necessary settings, including your SQL Server connection string and any other environment-specific configurations.
+   Ensure you have configured the `app.config` and `appsettings.json` files with the necessary settings, including your SQL Server connection string, authentication settings, and any other environment-specific configurations.
 
 3. Restore .NET dependencies:
    ```bash
@@ -93,6 +102,10 @@ To update the database with the latest migration:
 dotnet ef database update
 ```
 
+## Authentication
+
+This project uses Entity Framework Core for authentication. Ensure that your authentication settings are correctly configured in your `Startup.cs` or `Program.cs` file (depending on your .NET version). You will need to set up your identity models and configure the authentication services.
+
 ## Contributing
 
 Contributions are welcome! Please submit a pull request for any changes you would like to see.
@@ -100,3 +113,5 @@ Contributions are welcome! Please submit a pull request for any changes you woul
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
