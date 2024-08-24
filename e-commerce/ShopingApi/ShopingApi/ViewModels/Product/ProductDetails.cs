@@ -11,7 +11,7 @@ namespace ShopingApi.ViewModels.Product
         public string Name { get; set; }
         public string? Description { get; set; }
 
-        public List<Size>? Size { get; set; }
+        public List<Size>? Sizes { get; set; }
 
         public List<Color>? Colors { get; set; }
         public int Quantity { get; set; } 
@@ -22,8 +22,5 @@ namespace ShopingApi.ViewModels.Product
 
 
         public string Category { get; set; }
-
-        // Navigation property for ProductType
-        public string? ProductType { get; set; }
     }
 }

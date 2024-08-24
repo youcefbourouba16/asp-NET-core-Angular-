@@ -84,24 +84,24 @@ namespace ShopingApi.Controllers
                         .Join(
                             _context.Sizes,
                             ic => ic.SizeID,
-                            c => c.size,
+                            c => c.Name,
                             (ic, c) => c
                         )
                         .ToListAsync();
             var product = await _context.Items
                 .Where(p => p.Id == id)
-                .Include(p => p.ProductType) // Include ProductType if needed
+                .Include(p => p.ProductType) 
                 .Select(p => new ProductDetails
                 {
                     Id = p.Id,
                     Name = p.Name,
                     Description = p.Description,
-                    Size =sizes,
+                    Sizes =sizes,
                     Colors = colors,
                     Quantity = p.Quantity,
                     Price = p.Price,
                     ImageURL = p.ImageURL,
-                    ProductType = p.ProductType.typeName, // Assuming you only need the name of ProductType
+                    productTypeId = p.ProductType.typeName, 
                     Category = p.Category
                 })
                 .FirstOrDefaultAsync();
@@ -132,7 +132,7 @@ namespace ShopingApi.Controllers
                 .ToList();
 
             List<Size> sizes = _context.Sizes
-                .Where(c => vm.Size.Contains(c.size))
+                .Where(c => vm.Size.Contains(c.Name))
                 .ToList();
             var item = new Item
             {

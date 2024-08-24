@@ -85,19 +85,19 @@ namespace ShopingApi.Data
                     context.Sizes.AddRange(
                         new Size
                         {
-                            size = TshirtSize_enum.Large.ToString()
+                            Name = TshirtSize_enum.Large.ToString()
                         },
                         new Size
                         {
-                            size = TshirtSize_enum.Medium.ToString()
+                            Name = TshirtSize_enum.Medium.ToString()
                         },
                         new Size
                         {
-                            size = TshirtSize_enum.Small.ToString()
+                            Name = TshirtSize_enum.Small.ToString()
                         },
                         new Size
                         {
-                            size = TshirtSize_enum.ExtraLarge.ToString()
+                            Name = TshirtSize_enum.ExtraLarge.ToString()
                         });
 
 
@@ -111,8 +111,8 @@ namespace ShopingApi.Data
                     var redColor = context.Colors.FirstOrDefault(c => c.Name == "Red");
                     var blueColor = context.Colors.FirstOrDefault(c => c.Name == "Blue");
 
-                    var smallSize = context.Sizes.FirstOrDefault(c => c.size == TshirtSize_enum.Small.ToString());
-                    var largeSize = context.Sizes.FirstOrDefault(c => c.size == TshirtSize_enum.Large.ToString());
+                    var smallSize = context.Sizes.FirstOrDefault(c => c.Name == TshirtSize_enum.Small.ToString());
+                    var largeSize = context.Sizes.FirstOrDefault(c => c.Name == TshirtSize_enum.Large.ToString());
 
                     var redTshirt = new Item
                     {
@@ -149,10 +149,10 @@ namespace ShopingApi.Data
                     );
 
                     context.ItemSizes.AddRange(
-                        new ItemSizes { ItemID = redTshirt.Id, SizeID = smallSize.size },
-                        new ItemSizes { ItemID = redTshirt.Id, SizeID = largeSize.size },
-                        new ItemSizes { ItemID = blueJeans.Id, SizeID = smallSize.size },
-                        new ItemSizes { ItemID = blueJeans.Id, SizeID = largeSize.size }
+                        new ItemSizes { ItemID = redTshirt.Id, SizeID = smallSize.Name },
+                        new ItemSizes { ItemID = redTshirt.Id, SizeID = largeSize.Name },
+                        new ItemSizes { ItemID = blueJeans.Id, SizeID = smallSize.Name },
+                        new ItemSizes { ItemID = blueJeans.Id, SizeID = largeSize.Name }
                     );
 
                     await context.SaveChangesAsync();

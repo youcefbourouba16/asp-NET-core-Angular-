@@ -65,7 +65,7 @@ namespace ShopingApi.Repository
             foreach (var item in sizes)
             {
                 _context.ItemSizes.AddRange(
-                        new ItemSizes { ItemID = itemID, SizeID = item.size });
+                        new ItemSizes { ItemID = itemID, SizeID = item.Name });
             }
             Save();
         }

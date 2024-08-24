@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../shared/products/product.service';
 import { ActivatedRoute } from '@angular/router';
+import { ProductDetails } from '../../Models/productViewModel/product-details';
 
 @Component({
   selector: 'app-details',
@@ -10,9 +11,9 @@ import { ActivatedRoute } from '@angular/router';
 export class DetailsComponent  implements OnInit{
   
   productId: number | undefined;
-  product: any | undefined;
+  product: ProductDetails | undefined;
 
-  constructor(private route: ActivatedRoute, productService : ProductService) {}
+  constructor(private route: ActivatedRoute,private productService : ProductService) {}
 
   ngOnInit() {
     this.productId = Number(this.route.snapshot.paramMap.get('id'));
@@ -20,7 +21,15 @@ export class DetailsComponent  implements OnInit{
   }
 
   loadProductDetails(){
-    
+    this.productService.getProductByID(this.productId).subscribe({
+      next: (data: ProductDetails ) => {
+        console.log('Products loaded:', data);
+        this.product = data;
+      },
+      error: (err) => {
+        console.error('Error fetching product data', err);
+      }
+    });
   }
 
 }

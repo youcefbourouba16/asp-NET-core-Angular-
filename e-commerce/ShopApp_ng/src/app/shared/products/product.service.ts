@@ -16,7 +16,7 @@ export class ProductService {
   }
 
   getProductByID(ID : any) : Observable<any>{
-    return this.http.get<ProductViewModel[]>(`${this.apiGetProductView}/getProductView`);
+    return this.http.get<ProductViewModel[]>(`${this.apiGetProductView}/getProductDetails/`+ID);
   }
   
 

@@ -7,6 +7,6 @@ namespace ShopingApi.Models
     {
         [Key]
 
-        public string size { get; set; }
+        public string Name { get; set; }
     }
 }
