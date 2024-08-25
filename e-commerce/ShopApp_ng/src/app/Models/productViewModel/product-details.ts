@@ -17,5 +17,5 @@ export class Size {
   
   export class Color {
     name: string | undefined;
-    hexCode: string | undefined;
+    hexValue: string | undefined;
   }

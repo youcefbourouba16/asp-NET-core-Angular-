@@ -18,18 +18,44 @@
           <p>{{product?.description}}</p>
           <p class="mb-4">fsdfsdf</p>
           <p><strong class="text-primary h4">${{product?.price}}</strong></p>
-          <div class="mb-1 d-flex">
 
-          <ng-container *ngFor="let size of product?.sizes">
+<!-- sizes-->
+          <div class="mb-1 d-flex">
+           <ng-container *ngFor="let size of product?.sizes">
               <label for="option-{{size.name}}" class="d-flex mr-3 mb-3">
                 <span class="d-inline-block mr-2" style="top:-2px; position: relative;">
                   <input type="radio" id="option-{{size.name}}" name="shop-sizes">
                 </span> 
                 <span class="d-inline-block text-black">{{ size.name }}</span>
               </label>   
-          </ng-container>
+            </ng-container>
+          </div>
+<!-- colors-->
 
-        </div>
+<div class="mb-1 d-flex">
+  <ng-container *ngFor="let color of product?.colors">
+    <label for="option-{{color.name}}" class="d-flex align-items-center mr-3 mb-3">
+      <input type="radio" id="option-{{color.name}}" name="shop-colors" class="mr-2">
+      <span 
+          class="color-swatch d-inline-block mr-2" 
+          [ngStyle]="{ 
+            'background-color': color.hexValue, 
+            'width': '20px', 
+            'height': '20px', 
+            'border-radius': '50%', 
+            'border': '1px solid #ccc' 
+          }">
+      </span>
+
+      <span class="d-inline-block text-black ml-2">{{ color.name }}</span>
+    </label>
+  </ng-container>
+</div>
+
+
+
+
+
           
           <div class="mb-5">
             <div class="input-group mb-3" style="max-width: 120px;">

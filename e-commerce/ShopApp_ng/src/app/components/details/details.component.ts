@@ -12,6 +12,7 @@ export class DetailsComponent  implements OnInit{
   
   productId: number | undefined;
   product: ProductDetails | undefined;
+  zbi: string | '#ff0000' = '#ff0000';
 
   constructor(private route: ActivatedRoute,private productService : ProductService) {}
 
