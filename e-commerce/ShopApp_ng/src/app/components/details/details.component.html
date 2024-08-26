@@ -7,6 +7,7 @@
     </div>
   </div>  
 
+
   <div class="site-section">
     <div class="container">
       <div class="row">
@@ -15,8 +16,7 @@
         </div>
         <div class="col-md-6">
           <h2 class="text-black">{{product?.name}}</h2>
-          <p>{{product?.description}}</p>
-          <p class="mb-4">fsdfsdf</p>
+          <p class="mb-4">{{product?.description}}</p>
           <p><strong class="text-primary h4">${{product?.price}}</strong></p>
 
 <!-- sizes-->
@@ -24,18 +24,19 @@
            <ng-container *ngFor="let size of product?.sizes">
               <label for="option-{{size.name}}" class="d-flex mr-3 mb-3">
                 <span class="d-inline-block mr-2" style="top:-2px; position: relative;">
-                  <input type="radio" id="option-{{size.name}}" name="shop-sizes">
+                  <input  (change)="onChangeSize(size.name)"  type="radio" id="option-{{size.name}}" name="shop-sizes">
                 </span> 
                 <span class="d-inline-block text-black">{{ size.name }}</span>
               </label>   
             </ng-container>
+            <p *ngIf="!sizeValueSelected">Please select an option.</p>
           </div>
 <!-- colors-->
 
 <div class="mb-1 d-flex">
   <ng-container *ngFor="let color of product?.colors">
     <label for="option-{{color.name}}" class="d-flex align-items-center mr-3 mb-3">
-      <input type="radio" id="option-{{color.name}}" name="shop-colors" class="mr-2">
+      <input (change)="onChangeColor(color.name)"  type="radio" id="option-{{color.name}}" name="shop-colors" class="mr-2">
       <span 
           class="color-swatch d-inline-block mr-2" 
           [ngStyle]="{ 
@@ -50,6 +51,7 @@
       <span class="d-inline-block text-black ml-2">{{ color.name }}</span>
     </label>
   </ng-container>
+  <p *ngIf="!colorValueSelected">Please select an option.</p>
 </div>
 
 
@@ -69,9 +71,14 @@
           </div>
 
           </div>
-          <p><a href="cart.html" class="buy-now btn btn-sm btn-primary">Add To Cart</a></p>
+          <p>
+            <button (click)="addtocart()" class="buy-now btn btn-sm btn-primary">Add To Cart</button>
+          </p>
+        
 
         </div>
       </div>
     </div>
+    
+  
   </div>

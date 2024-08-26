@@ -10,6 +10,7 @@ export class ProductDetails {
     productTypeId: string  | undefined;
     category: string  | undefined;
     productType?: string  | undefined;
+    
 }
 export class Size {
     name: string | undefined;

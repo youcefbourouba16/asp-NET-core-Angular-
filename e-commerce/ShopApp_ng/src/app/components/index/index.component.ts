@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { ProductViewModel } from '../../Models/productViewModel/product-view-model';
 import { ProductService } from '../../shared/products/product.service';
+import { CartService } from '../../shared/Cart/cart.service';
 
 declare var $: any;  // Declare jQuery
 
