@@ -7,6 +7,7 @@ import { AuthGuard } from './shared/auth-gaurd.service';
 import { LogOutComponent } from './components/log-out/log-out.component';
 import { ShopComponent } from './components/shop/shop.component';
 import { DetailsComponent } from './components/details/details.component';
+import { CartComponent } from './components/cart/cart.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [AuthGuard] },
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path: '',component: IndexComponent, canActivate: [AuthGuard]},
   { path: 'logOut', component: LogOutComponent },
   { path: 'shop', component: ShopComponent },
+  { path: 'cart', component: CartComponent },
   { path: 'product-detail/:id', component: DetailsComponent }
 ];
 

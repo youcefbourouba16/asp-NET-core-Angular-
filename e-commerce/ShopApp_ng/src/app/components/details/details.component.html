@@ -1,84 +1,101 @@
+<style>
+  /* component-name.component.css */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+</style>
 
 <div class="bg-light py-3">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Tank Top T-Shirt</strong></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 mb-0">
+        <a href="index.html">Home</a>
+        <span class="mx-2 mb-0">/</span>
+        <strong class="text-black">{{ product.name }}</strong>
       </div>
     </div>
-  </div>  
-
-
-  <div class="site-section">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <img [src]="product?.imageURL" alt="{{product?.id}}/{{product?.name}}.img" class="img-fluid">
-        </div>
-        <div class="col-md-6">
-          <h2 class="text-black">{{product?.name}}</h2>
-          <p class="mb-4">{{product?.description}}</p>
-          <p><strong class="text-primary h4">${{product?.price}}</strong></p>
-
-<!-- sizes-->
-          <div class="mb-1 d-flex">
-           <ng-container *ngFor="let size of product?.sizes">
-              <label for="option-{{size.name}}" class="d-flex mr-3 mb-3">
-                <span class="d-inline-block mr-2" style="top:-2px; position: relative;">
-                  <input  (change)="onChangeSize(size.name)"  type="radio" id="option-{{size.name}}" name="shop-sizes">
-                </span> 
-                <span class="d-inline-block text-black">{{ size.name }}</span>
-              </label>   
-            </ng-container>
-            <p *ngIf="!sizeValueSelected">Please select an option.</p>
-          </div>
-<!-- colors-->
-
-<div class="mb-1 d-flex">
-  <ng-container *ngFor="let color of product?.colors">
-    <label for="option-{{color.name}}" class="d-flex align-items-center mr-3 mb-3">
-      <input (change)="onChangeColor(color.name)"  type="radio" id="option-{{color.name}}" name="shop-colors" class="mr-2">
-      <span 
-          class="color-swatch d-inline-block mr-2" 
-          [ngStyle]="{ 
-            'background-color': color.hexValue, 
-            'width': '20px', 
-            'height': '20px', 
-            'border-radius': '50%', 
-            'border': '1px solid #ccc' 
-          }">
-      </span>
-
-      <span class="d-inline-block text-black ml-2">{{ color.name }}</span>
-    </label>
-  </ng-container>
-  <p *ngIf="!colorValueSelected">Please select an option.</p>
+  </div>
 </div>
 
+<div class="site-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <img [src]="product.imageURL" alt="{{ product.name }} image" class="img-fluid">
+      </div>
+      <div class="col-md-6">
+        <h2 class="text-black">{{ product.name }}</h2>
+        <p class="mb-4">{{ product.description }}</p>
+        <p><strong class="text-primary h4">${{ product.price }}</strong></p>
 
-
-
-
-          
-          <div class="mb-5">
-            <div class="input-group mb-3" style="max-width: 120px;">
-            <div class="input-group-prepend">
-              <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
-            </div>
-            <input type="text" class="form-control text-center" value="1" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
-            <div class="input-group-append">
-              <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
-            </div>
-          </div>
-
-          </div>
-          <p>
-            <button (click)="addtocart()" class="buy-now btn btn-sm btn-primary">Add To Cart</button>
-          </p>
-        
+        <!-- Sizes -->
+        <div class="mb-1 d-flex">
+          <ng-container *ngFor="let size of product.sizes">
+            <label for="option-{{ size.name }}" class="d-flex mr-3 mb-3" [class.selected]="size.name === productTocart.size">
+              <span class="d-inline-block mr-2" style="top:-2px; position: relative;">
+                <input (change)="onChangeSize(size.name)" type="radio" id="option-{{ size.name }}" name="shop-sizes">
+              </span>
+              <span class="d-inline-block text-black">{{ size.name }}</span>
+            </label>
+          </ng-container>
+          <p  *ngIf="!sizeValueSelected">Please select an option.</p>
 
         </div>
+
+        <!-- Colors -->
+        <div class="mb-1 d-flex">
+          <ng-container *ngFor="let color of product?.colors">
+            <label for="option-{{ color.name }}" class="d-flex align-items-center mr-3 mb-3" [class.selected]="color.name === productTocart.color">
+              <input (change)="onChangeColor(color.name)" type="radio" id="option-{{ color.name }}" name="shop-colors" class="mr-2">
+              <span class="color-swatch d-inline-block mr-2" [ngStyle]="{
+                'background-color': color.hexValue,
+                'width': '20px',
+                'height': '20px',
+                'border-radius': '50%',
+                'border': '1px solid #ccc'
+              }"></span>
+              <span class="d-inline-block text-black ml-2">{{ color.name }}</span>
+            </label>
+          </ng-container>
+          <p *ngIf="!colorValueSelected">Please select an option.</p>
+        </div>
+
+        <!-- Quantity Selector -->
+        <div class="mb-5">
+          <div class="input-group mb-3" style="max-width: 120px;">
+            <div class="input-group-prepend">
+              <button (click)="decreaseQuantity()" class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
+            </div>
+            <input
+            readonly
+            type="number"
+            class="form-control text-center"
+            [(ngModel)]="productTocart.quantityBuying"
+            [min]="1"
+            [max]="product.quantity"
+            value="1"
+            aria-label="Product quantity"
+            aria-describedby="button-addon1"
+          />
+
+
+            <div class="input-group-append">
+              <button (click)="increaseQuantity()" class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
+            </div>
+          </div>
+        </div>
+
+        <p>
+          <button (click)="addtocart(product)" class="buy-now btn btn-sm btn-primary" [disabled]="!sizeValueSelected || !colorValueSelected">Add To Cart</button>
+        </p>
       </div>
     </div>
-    
-  
   </div>
+</div>

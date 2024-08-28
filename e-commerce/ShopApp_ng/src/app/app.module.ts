@@ -13,6 +13,7 @@ import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 import { LogOutComponent } from './components/log-out/log-out.component';
 import { ShopComponent } from './components/shop/shop.component';
 import { DetailsComponent } from './components/details/details.component';
+import { CartComponent } from './components/cart/cart.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -26,7 +27,8 @@ export function tokenGetter() {
     NavBarComponent,
     LogOutComponent,
     ShopComponent,
-    DetailsComponent
+    DetailsComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,

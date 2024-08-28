@@ -23,8 +23,8 @@
                 <li><a [routerLink]="['/login']"><span class="icon icon-person"></span></a></li>
                 <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
                 <li>
-                  <a href="cart.html" class="site-cart">
-                    <span class="icon icon-shopping_cart"></span>
+                  <a  class="site-cart">
+                    <span [routerLink]="['/cart']" class="icon icon-shopping_cart"></span>
                     <span class="count">{{totalItem}}</span>
                   </a>
                 </li> 
