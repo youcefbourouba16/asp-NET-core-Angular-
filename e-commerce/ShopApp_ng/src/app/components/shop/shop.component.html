@@ -1,3 +1,17 @@
+<style>
+  #slider-range {
+  height: 8px; }
+  #slider-range .ui-slider-handle {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: none !important;
+    background: #7971ea; }
+    #slider-range .ui-slider-handle:focus, #slider-range .ui-slider-handle:active {
+      outline: none; }
+  #slider-range .ui-slider-range {
+    background-color: #7971ea; }
+</style>
 <div class="bg-light py-3">
     <div class="container">
       <div class="row">
@@ -109,20 +123,20 @@
 
             <div class="mb-4">
               <h3 class="mb-3 h6 text-uppercase text-black d-block">Color</h3>
-              <a href="#" class="d-flex color-item align-items-center" >
-                <span class="bg-danger color d-inline-block rounded-circle mr-2"></span> <span class="text-black">Red (2,429)</span>
-              </a>
-              <a href="#" class="d-flex color-item align-items-center" >
-                <span class="bg-success color d-inline-block rounded-circle mr-2"></span> <span class="text-black">Green (2,298)</span>
-              </a>
-              <a href="#" class="d-flex color-item align-items-center">
-                <span style="background: black" class="bg-info color d-inline-block rounded-circle mr-2"></span>
-                <span class="text-black">black (1,075)</span>
-              </a>
-
-              <a href="#" class="d-flex color-item align-items-center" >
-                <span class="bg-primary color d-inline-block rounded-circle mr-2"></span> <span class="text-black">Purple (1,075)</span>
-              </a>
+              <<ng-container *ngFor="let color of colors" >
+                <a href="#" class="d-flex color-item align-items-center">
+                  <span class="color-swatch d-inline-block mr-2" [ngStyle]="{
+                    'background-color': color.hexValue,
+                    'width': '20px',
+                    'height': '20px',
+                    'border-radius': '50%',
+                    'border': '1px solid #ccc'
+                  }"></span>
+                  <span class="text-black">{{ color.name }}</span>
+                </a>
+              </ng-container>
+              
+              
             </div>
 
           </div>

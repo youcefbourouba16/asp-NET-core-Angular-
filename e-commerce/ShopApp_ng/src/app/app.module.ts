@@ -47,7 +47,7 @@ export function tokenGetter() {
       },
     }),
     BrowserAnimationsModule, // required animations module
-    ToastrModule.forRoot(), // ToastrModule added
+    ToastrModule.forRoot()
   ],
   providers: [
     provideClientHydration(),

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../shared/products/product.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductDetails } from '../../Models/productViewModel/product-details';
 import { CartService } from '../../shared/Cart/cart.service';
 import { CartViewModel } from '../../Models/productViewModel/cart-view-model';
+
 
 @Component({
   selector: 'app-details',
@@ -21,7 +22,8 @@ export class DetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
-    private cartService: CartService
+    private cartService: CartService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -57,7 +59,7 @@ export class DetailsComponent implements OnInit {
 
       this.cartService.addtoCart(this.productTocart);
 
-      console.log('Product added to cart:', this.productTocart);
+      this.router.navigate(['/shop']);
     } else {
       console.log('Please select both size and color before adding to the cart.');
     }

@@ -18,7 +18,7 @@ namespace ShopingApi.Controllers
         }
 
         [HttpGet]
-        [Route("api/Product/getColors")]
+        [Route("api/Product/getAllColors")]
         public async Task<ActionResult> GetAllColors()
         {
 

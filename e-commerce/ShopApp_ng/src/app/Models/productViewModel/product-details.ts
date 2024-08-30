@@ -1,3 +1,6 @@
+import { Color } from "./color_size/color";
+import { Size } from "./color_size/size";
+
 export class ProductDetails {
     id: number  | undefined;
     name: string | undefined;
@@ -12,11 +15,3 @@ export class ProductDetails {
     productType?: string  | undefined;
     
 }
-export class Size {
-    name: string ="";
-  }
-  
-  export class Color {
-    name: string ="";
-    hexValue: string | undefined;
-  }

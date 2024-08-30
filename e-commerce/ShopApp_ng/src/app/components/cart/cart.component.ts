@@ -33,6 +33,7 @@ export class CartComponent implements OnInit {
   }
   removeItem(index: number): void {
     this.products.splice(index, 1);
+    this.cdr.detectChanges();
   }
   getTotalPrice(): any{
     return this.cartService.getTotalPrice()
