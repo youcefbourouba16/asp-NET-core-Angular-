@@ -5,7 +5,8 @@
 ![1](https://github.com/user-attachments/assets/f91019dc-577e-4ce2-b1ce-46045eb6d8fe)
 ![2](https://github.com/user-attachments/assets/60ca8c5a-7ef2-4351-9505-f280fd271e17)
 ![3](https://github.com/user-attachments/assets/764d3f05-2b48-4fda-a79e-06342050802f)
-![4](https://github.com/user-attachments/assets/94e4966f-ec33-4031-88ee-1e0dbc7da0cc)
+![4](https://github.com/user-attachments/assets/c04ebb03-dbe5-42f2-bb19-afb1555581ab)
+![5](https://github.com/user-attachments/assets/444bde1e-019e-4515-9e4c-7e99fedb3fa3)
 
 This project is a web application built using Angular, ASP.NET Core, and SQL Server. The frontend is powered by Angular 16.2.14, while the backend is developed with the latest version of ASP.NET Core, utilizing Entity Framework Core for both database interactions and authentication. Cloudinary is used for media management and storage.
 
