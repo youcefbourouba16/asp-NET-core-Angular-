@@ -56,7 +56,6 @@ export class DetailsComponent implements OnInit {
       this.productTocart.imageURL = product.imageURL;
 
       this.cartService.addtoCart(this.productTocart);
-      localStorage.setItem('cartItems', JSON.stringify(this.productTocart));
 
       console.log('Product added to cart:', this.productTocart);
     } else {

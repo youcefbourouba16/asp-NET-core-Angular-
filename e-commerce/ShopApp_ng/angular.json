@@ -43,7 +43,8 @@
               "src/assets/css/owl.carousel.min.css",
               "src/assets/css/owl.theme.default.min.css",
               "src/assets/css/aos.css",
-              "src/assets/css/style.css"
+              "src/assets/css/style.css",
+             "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [],
             "server": "src/main.server.ts",
