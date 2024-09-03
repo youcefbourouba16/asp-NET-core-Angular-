@@ -17,5 +17,7 @@ namespace ShopingApi.Interfaces
 
         Task AddItemColors(List<Color> colors,int itemID);
         Task AddItemSizes(List<Size> sizes,int itemID);
+
+        Task<IEnumerable<ProductViewModel>> GetAllProductViewModelsAsync();
     }
 }

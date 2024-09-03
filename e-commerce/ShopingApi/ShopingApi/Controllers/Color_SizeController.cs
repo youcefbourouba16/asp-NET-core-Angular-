@@ -21,7 +21,6 @@ namespace ShopingApi.Controllers
         [Route("api/Product/getAllColors")]
         public async Task<ActionResult> GetAllColors()
         {
-
             var colors = await _context.Colors
                 .ToListAsync();
 

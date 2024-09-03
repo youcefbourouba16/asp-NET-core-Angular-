@@ -11,6 +11,26 @@
       outline: none; }
   #slider-range .ui-slider-range {
     background-color: #7971ea; }
+    .category-link {
+  cursor: pointer;
+  }
+  .color-container {
+  display: flex; /* Enable flexbox */
+  flex-wrap: wrap; /* Allow items to wrap to the next line if there's not enough space */
+  gap: 10px; /* Add space between items (adjust as needed) */
+}
+
+.color-item {
+  display: flex;
+  align-items: center;
+  text-decoration: none; /* Remove default link underline */
+}
+
+.color-swatch {
+  display: inline-block;
+  margin-right: 8px; /* Space between color swatch and text (adjust as needed) */
+}
+
 </style>
 <div class="bg-light py-3">
     <div class="container">
@@ -31,13 +51,14 @@
               <div class="float-md-left mb-4"><h2 class="text-black h5">Shop All</h2></div>
               <div class="d-flex">
                 <div class="dropdown mr-1 ml-md-auto">
-                  <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <button   type="button" class="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Latest
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
-                    <a class="dropdown-item" href="#">Men</a>
-                    <a class="dropdown-item" href="#">Women</a>
-                    <a class="dropdown-item" href="#">Children</a>
+                    <a class="dropdown-item category-link " (click)="loadProducts()" style="color: red;" >All</a>
+                    <a class="dropdown-item category-link" (click)="loadProductByCategory('Men')" >Men</a>
+                    <a class="dropdown-item category-link" (click)="loadProductByCategory('Woman')" >Women</a>
+                    <a class="dropdown-item category-link" (click)="loadProductByCategory('Kids')" >Kids</a>
                   </div>
                 </div>
                 <div class="btn-group">
@@ -95,9 +116,11 @@
           <div class="border p-4 rounded mb-4">
             <h3 class="mb-3 h6 text-uppercase text-black d-block">Categories</h3>
             <ul class="list-unstyled mb-0">
-              <li class="mb-1"><a href="#" class="d-flex"><span>Men</span> <span class="text-black ml-auto">(2,220)</span></a></li>
-              <li class="mb-1"><a href="#" class="d-flex"><span>Women</span> <span class="text-black ml-auto">(2,550)</span></a></li>
-              <li class="mb-1"><a href="#" class="d-flex"><span>Children</span> <span class="text-black ml-auto">(2,124)</span></a></li>
+              <li class="mb-1"><a (click)="loadProducts()" class="d-flex category-link">
+                <span style="color: red;">All</span> <span class="text-black ml-auto">(2,220)</span></a></li>
+              <li class="mb-1"><a (click)="loadProductByCategory('Men')" class="d-flex category-link"><span>Men</span> <span class="text-black ml-auto">(2,220)</span></a></li>
+              <li class="mb-1"><a (click)="loadProductByCategory('Women')" class="d-flex category-link"><span>Women</span> <span class="text-black ml-auto">(2,550)</span></a></li>
+              <li class="mb-1"><a (click)="loadProductByCategory('Kids')" class="d-flex category-link"><span>Kids</span> <span class="text-black ml-auto">(2,124)</span></a></li>
             </ul>
           </div>
 
@@ -123,21 +146,22 @@
 
             <div class="mb-4">
               <h3 class="mb-3 h6 text-uppercase text-black d-block">Color</h3>
-              <<ng-container *ngFor="let color of colors" >
-                <a href="#" class="d-flex color-item align-items-center">
-                  <span class="color-swatch d-inline-block mr-2" [ngStyle]="{
-                    'background-color': color.hexValue,
-                    'width': '20px',
-                    'height': '20px',
-                    'border-radius': '50%',
-                    'border': '1px solid #ccc'
-                  }"></span>
-                  <span class="text-black">{{ color.name }}</span>
-                </a>
-              </ng-container>
-              
-              
+              <div class="color-container">
+                <ng-container *ngFor="let color of colors">
+                  <a href="#" class="d-flex color-item align-items-center">
+                    <span class="color-swatch d-inline-block mr-2" [ngStyle]="{
+                      'background-color': color.hexValue,
+                      'width': '20px',
+                      'height': '20px',
+                      'border-radius': '50%',
+                      'border': '1px solid #ccc'
+                    }"></span>
+                    <span class="text-black">{{ color.name }}</span>
+                  </a>
+                </ng-container>
+              </div>
             </div>
+            
 
           </div>
         </div>

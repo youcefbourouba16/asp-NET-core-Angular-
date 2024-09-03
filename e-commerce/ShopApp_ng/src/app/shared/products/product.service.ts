@@ -27,5 +27,8 @@ export class ProductService {
     return this.http.get<Size[]>(`${this.apiGetProductView}/getAllsize`);
   }
   
+  getProductsByCategory(Category : any) : Observable<any>{
+    return this.http.get<ProductViewModel[]>(`${this.apiGetProductView}/getProductByCategory/`+Category);
+  }
 
 }

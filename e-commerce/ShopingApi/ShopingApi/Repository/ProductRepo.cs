@@ -1,4 +1,5 @@
-﻿using ShopingApi.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using ShopingApi.Data;
 using ShopingApi.Interfaces;
 using ShopingApi.Models;
 using ShopingApi.ViewModels.Product;
@@ -68,6 +69,22 @@ namespace ShopingApi.Repository
                         new ItemSizes { ItemID = itemID, SizeID = item.Name });
             }
             Save();
+        }
+
+        public async Task<IEnumerable<ProductViewModel>> GetAllProductViewModelsAsync()
+        {
+            var products = await _context.Items
+            .Select(p => new ProductViewModel
+            {
+                Name = p.Name,
+                Id = p.Id,
+                Category = p.Category,
+                Price = p.Price,
+                ImageURL = p.ImageURL
+            })
+            .ToListAsync();
+
+            return products;
         }
     }
 }

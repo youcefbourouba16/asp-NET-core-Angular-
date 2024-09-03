@@ -49,16 +49,7 @@ namespace ShopingApi.Controllers
         [Route("api/Product/getProductView")]
         public async Task<ActionResult<IEnumerable<ProductViewModel>>> GetProductsView()
         {
-            var products = await _context.Items
-                .Select(p => new ProductViewModel
-                {
-                    Name = p.Name,
-                    Id=p.Id,
-                    Category=p.Category,
-                    Price = p.Price,
-                    ImageURL=p.ImageURL
-                })
-                .ToListAsync();
+            var products = await _productRepo.GetAllProductViewModelsAsync();
 
             return Ok(products);
         }
@@ -154,7 +145,24 @@ namespace ShopingApi.Controllers
             return Ok(item);  // Return the created item as the response
         }
 
+        [HttpGet]
+        [Route("api/Product/getProductByCategory/{categoryName}")]
+        public async Task<ActionResult<ProductDetails>> getProductByCategory(string categoryName)
+        {
+            var products = await _context.Items
+                .Where(p => p.Category == categoryName)
+                .Select(p => new ProductViewModel
+                {
+                    Name = p.Name,
+                    Id = p.Id,
+                    Category = p.Category,
+                    Price = p.Price,
+                    ImageURL = p.ImageURL
+                })
+                .ToListAsync();
 
+            return Ok(products);
+        }
 
     }
 }
