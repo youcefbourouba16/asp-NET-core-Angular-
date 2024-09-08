@@ -65,17 +65,17 @@ builder.Services.AddAuthentication(options =>
     });
 
 
-builder.Services.AddCors(options => options.AddPolicy(name: "FrontendUI",
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "FrontendUI",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200")
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
+        });
+});
 
-    policy =>
-
-    {
-
-        policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader();
-
-    }
-
-    ));
 
 builder.Services.Configure<FormOptions>(options =>
 {

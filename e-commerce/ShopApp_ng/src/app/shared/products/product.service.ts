@@ -4,13 +4,14 @@ import { ProductViewModel } from '../../Models/productViewModel/product-view-mod
 import { Observable } from 'rxjs';
 import { Color } from '../../Models/productViewModel/color_size/color';
 import { Size } from '../../Models/productViewModel/color_size/size';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  private apiGetProductView = 'http://localhost:5019/api/Product';
+  private apiGetProductView = environment.apiUrl+'/Product';
 
   constructor(private http: HttpClient){}
   getProductNamesAndPrices(): Observable<ProductViewModel[]> {

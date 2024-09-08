@@ -42,8 +42,8 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: ['localhost:5019'], // Adjust to your backend domain
-        disallowedRoutes: ['localhost:5019/api/auth/login'], // Routes that shouldn't include the token
+        allowedDomains: ['localhost:5019','http://youcefbourouba-001-site1.ltempurl.com'], // Adjust to your backend domain
+        disallowedRoutes: ['localhost:5019/api/auth/login','http://youcefbourouba-001-site1.ltempurl.com/api/auth/login'], // Routes that shouldn't include the token
       },
     }),
     BrowserAnimationsModule, // required animations module

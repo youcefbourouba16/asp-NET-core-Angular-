@@ -8,12 +8,13 @@ import { AccountSigninModel } from '../Models/account-signin-model';
 import { SignUpResponse } from '../Interfaces/sign-up-response';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:5019/api/account';
+  private apiUrl = environment.apiUrl+'/account';
 
   constructor(private http: HttpClient, private router: Router, private jwtHelper: JwtHelperService) {}
 
