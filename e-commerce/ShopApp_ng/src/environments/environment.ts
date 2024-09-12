@@ -1,5 +1,5 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://api.youcefbourouba.net/api',
+    apiUrl: 'http://youcefbourouba.somee.com/api',
     debug: false
 };

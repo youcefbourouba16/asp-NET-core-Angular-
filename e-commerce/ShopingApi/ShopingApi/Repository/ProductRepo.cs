@@ -3,6 +3,7 @@ using ShopingApi.Data;
 using ShopingApi.Interfaces;
 using ShopingApi.Models;
 using ShopingApi.ViewModels.Product;
+using System.Linq;
 
 namespace ShopingApi.Repository
 {
@@ -85,6 +86,48 @@ namespace ShopingApi.Repository
             .ToListAsync();
 
             return products;
+        }
+
+        public async Task<IEnumerable<ProductViewModel>> GetItemsBySizesAsync(List<string> sizes)
+        {
+
+            var list = await _context.Items
+            .Include(i => i.Sizes) // Include the related sizes
+            .Where(i => sizes.All(s => i.Sizes.Select(size => size.SizeID).Contains(s))) // Check if the item contains all the sizes in the list
+            .Select(p => new ProductViewModel
+            {
+                Name = p.Name,
+                Id = p.Id,
+                Category = p.Category,
+                Price = p.Price,
+                ImageURL = p.ImageURL
+            })
+            .ToListAsync();
+
+            return list;
+
+        }
+        public async Task<IEnumerable<ProductViewModel>> GetItemsByColorAsync(string color)
+        {
+
+            
+
+            var list = await _context.Items
+            .Include(i => i.Colors)
+            .Where(i => i.Colors.Any(c => c.ColorId == color))
+            //.Where(i => i.Colors.Select(color => color.ColorId).Contains(color)) 
+            .Select(p => new ProductViewModel
+            {
+                Name = p.Name,
+                Id = p.Id,
+                Category = p.Category,
+                Price = p.Price,
+                ImageURL = p.ImageURL
+            })
+            .ToListAsync();
+
+            return list;
+
         }
     }
 }

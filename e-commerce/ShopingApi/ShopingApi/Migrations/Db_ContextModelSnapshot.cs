@@ -229,12 +229,7 @@ namespace ShopingApi.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("ItemId")
-                        .HasColumnType("int");
-
                     b.HasKey("Name");
-
-                    b.HasIndex("ItemId");
 
                     b.ToTable("Colors");
                 });
@@ -290,6 +285,8 @@ namespace ShopingApi.Migrations
 
                     b.HasKey("ColorId", "ItemID");
 
+                    b.HasIndex("ItemID");
+
                     b.ToTable("ItemColors");
                 });
 
@@ -302,6 +299,8 @@ namespace ShopingApi.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("SizeID", "ItemID");
+
+                    b.HasIndex("ItemID");
 
                     b.ToTable("ItemSizes");
                 });
@@ -321,12 +320,7 @@ namespace ShopingApi.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("ItemId")
-                        .HasColumnType("int");
-
                     b.HasKey("Name");
-
-                    b.HasIndex("ItemId");
 
                     b.ToTable("Sizes");
                 });
@@ -382,13 +376,6 @@ namespace ShopingApi.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ShopingApi.Models.Color", b =>
-                {
-                    b.HasOne("ShopingApi.Models.Item", null)
-                        .WithMany("Colors")
-                        .HasForeignKey("ItemId");
-                });
-
             modelBuilder.Entity("ShopingApi.Models.Item", b =>
                 {
                     b.HasOne("ShopingApi.Models.ProductType", "ProductType")
@@ -400,18 +387,39 @@ namespace ShopingApi.Migrations
                     b.Navigation("ProductType");
                 });
 
-            modelBuilder.Entity("ShopingApi.Models.Size", b =>
+            modelBuilder.Entity("ShopingApi.Models.ItemColors", b =>
                 {
                     b.HasOne("ShopingApi.Models.Item", null)
-                        .WithMany("Size")
-                        .HasForeignKey("ItemId");
+                        .WithMany("Colors")
+                        .HasForeignKey("ItemID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ShopingApi.Models.ItemSizes", b =>
+                {
+                    b.HasOne("ShopingApi.Models.Item", "Item")
+                        .WithMany("Sizes")
+                        .HasForeignKey("ItemID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ShopingApi.Models.Size", "Size")
+                        .WithMany()
+                        .HasForeignKey("SizeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Item");
+
+                    b.Navigation("Size");
                 });
 
             modelBuilder.Entity("ShopingApi.Models.Item", b =>
                 {
                     b.Navigation("Colors");
 
-                    b.Navigation("Size");
+                    b.Navigation("Sizes");
                 });
 #pragma warning restore 612, 618
         }

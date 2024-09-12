@@ -32,7 +32,7 @@ namespace ShopingApi.Controllers
         public async Task<ActionResult<IEnumerable<Item>>> GetProducts()
         {
             var items = await _context.Items
-                .Include(i => i.Size)     // Assuming Size is a navigation property
+                .Include(i => i.Sizes)     // Assuming Size is a navigation property
                 .Include(i => i.Colors)   // Assuming Colors is a navigation property
                 .Include(i => i.ProductType) // Include the ProductType if it's a navigation property
                 .ToListAsync();
@@ -58,44 +58,55 @@ namespace ShopingApi.Controllers
         [Route("api/Product/getProductDetails/{id}")]
         public async Task<ActionResult<ProductDetails>> GetProductDetailsByID(int id)
         {
-            List<Color> colors = await _context.ItemColors
-                        .Where(ic => ic.ItemID == id)
-                        .Join(
-                            _context.Colors,
-                            ic => ic.ColorId,
-                            c => c.Name,
-                            (ic, c) => c
-                        )
-                        .ToListAsync();
+            //List<Color> colors = await _context.ItemColors
+            //            .Where(ic => ic.ItemID == id)
+            //            .Join(
+            //                _context.Colors,
+            //                ic => ic.ColorId,
+            //                c => c.Name,
+            //                (ic, c) => c
+            //            )
+            //            .ToListAsync();
 
 
 
-            List<Size> sizes = await _context.ItemSizes
-                        .Where(ic => ic.ItemID == id)
-                        .Join(
-                            _context.Sizes,
-                            ic => ic.SizeID,
-                            c => c.Name,
-                            (ic, c) => c
-                        )
-                        .ToListAsync();
+            //List<Size> sizes = await _context.ItemSizes
+            //            .Where(ic => ic.ItemID == id)
+            //            .Join(
+            //                _context.Sizes,
+            //                ic => ic.SizeID,
+            //                c => c.Name,
+            //                (ic, c) => c
+            //            )
+            //            .ToListAsync();
             var product = await _context.Items
-                .Where(p => p.Id == id)
-                .Include(p => p.ProductType) 
-                .Select(p => new ProductDetails
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Description = p.Description,
-                    Sizes =sizes,
-                    Colors = colors,
-                    Quantity = p.Quantity,
-                    Price = p.Price,
-                    ImageURL = p.ImageURL,
-                    productTypeId = p.ProductType.typeName, 
-                    Category = p.Category
-                })
-                .FirstOrDefaultAsync();
+    .Where(p => p.Id == id)
+    .Include(p => p.ProductType)
+    .Include(p => p.Colors)
+    .Include(p => p.Sizes)
+    .Select(p => new ProductDetails
+    {
+            Id = p.Id,
+            Name = p.Name,
+            Description = p.Description,
+            Sizes = p.Sizes.Select(s => new Size
+            {
+                // Assume SizeDetails is a class representing size details
+                Name = s.SizeID
+            }).ToList(),
+            Colors = p.Colors.Select(c => new Color
+            {
+                // Assume ColorDetails is a class representing color details
+                Name = c.ColorId
+            }).ToList(),
+            Quantity = p.Quantity,
+            Price = p.Price,
+            ImageURL = p.ImageURL,
+            productTypeId = p.ProductType.typeName,
+            Category = p.Category
+        })
+        .FirstOrDefaultAsync();
+
 
             if (product == null)
             {
@@ -129,8 +140,6 @@ namespace ShopingApi.Controllers
             {
                 Name = vm.Name,
                 Description = vm.Description,
-                Size = sizes,
-                Colors = colors,
                 Quantity = vm.Quantity,
                 Price = vm.Price,
                 ImageURL = result.Url.ToString(),
@@ -162,6 +171,24 @@ namespace ShopingApi.Controllers
                 .ToListAsync();
 
             return Ok(products);
+        }
+
+        [HttpGet]
+        [Route("api/Product/getProductBySizes/")]
+        public async Task<ActionResult<ProductViewModel>> getProductByCategory(List<string> Sizes)
+        {
+
+            var items =await _productRepo.GetItemsBySizesAsync(Sizes);
+            return Ok(items);
+        }
+
+
+        [HttpGet]
+        [Route("api/Product/getProductByColor/{colorName}")]
+        public async Task<ActionResult<ProductViewModel>> getProductByColor(string colorName)
+        {
+            var items = await _productRepo.GetItemsByColorAsync(colorName);
+            return Ok(items);
         }
 
     }

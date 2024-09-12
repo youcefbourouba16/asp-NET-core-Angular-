@@ -12,7 +12,8 @@ import { Router } from '@angular/router';
 export class ShopComponent implements OnInit{
   products: ProductViewModel[] = [];
   colors : Color[]=[];
-  
+  selectedItems: string[] = [];
+  isLoading: boolean = false;
   constructor(private productService: ProductService,private router: Router) { }
   ngOnInit(): void {
     this.router.events.subscribe(() => {
@@ -25,12 +26,15 @@ export class ShopComponent implements OnInit{
 
 
   loadProducts(): void {
+    this.isLoading = true;
     this.productService.getProductNamesAndPrices().subscribe({
       next: (data: ProductViewModel[]) => {
         console.log('Products loaded:', data);
         this.products = data;
+        this.isLoading = false;
       },
       error: (err) => {
+        
         console.error('Error fetching product data', err);
       }
     });
@@ -57,4 +61,44 @@ export class ShopComponent implements OnInit{
       }
     });
   }
+
+  /*   Sizes section   */
+  onCheckboxChange(event: Event, item: string) {
+    const checkbox = event.target as HTMLInputElement;
+    if (checkbox.checked) {
+      this.selectedItems.push(item);
+      this.loadProductBySizes(this.selectedItems);
+
+    } else {
+      this.selectedItems = this.selectedItems.filter(selectedItem => selectedItem !== item);
+      this.loadProductBySizes(this.selectedItems)
+    }
+  }
+  loadProductBySizes(sizes: string[]): void {
+    this.productService.getProductBySizes(sizes).subscribe({
+        next: (data: ProductViewModel[]) => {
+            console.log('Products loaded:', data);
+            this.products = data;
+        },
+        error: (err) => {
+          this.products=[]
+            console.error('Error fetching product data', err);
+        }
+    });
+  }
+
+
+  /*   Colors section   */
+  loadProductByColor(color: string): void {
+    this.productService.getProductsByColor(color).subscribe({
+      next: (data: ProductViewModel[]) => {
+        console.log('Products loaded:', data);
+        this.products = data;
+      },
+      error: (err) => {
+        this.products=[]
+        console.error('Error fetching product data', err);
+      }
+    });
+}
 }

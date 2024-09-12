@@ -11,7 +11,7 @@
       outline: none; }
   #slider-range .ui-slider-range {
     background-color: #7971ea; }
-    .category-link {
+  .category-link {
   cursor: pointer;
   }
   .color-container {
@@ -77,24 +77,34 @@
           </div>
           <div class="row mb-5">
 
-            <ng-container *ngFor="let product of products">
-              <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up" >
-                <div class="block-4 text-center border">
-                  <figure class="block-4-image">
-                    <a [routerLink]="['/product-detail', product.id]"><img [src]="product.imageURL" alt="{{product.id}}/{{product.name}}.img" class="img-fluid"></a>
-                  </figure>
-                  <div class="block-4-text p-4">
-                    <h3><a [routerLink]="['/product-detail', product.id]">{{product.name}}</a></h3>
-                    <p class="mb-0">{{product.category}}</p>
-                    <p class="text-primary font-weight-bold">${{product.price}}</p>
+            <!-- Loading Spinner -->
+            
+            
+
+            <!-- products display-->
+            
+              <ng-container  *ngFor="let product of products">
+                <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up" >
+                  <div class="block-4 text-center border">
+                    <figure class="block-4-image">
+                      <a [routerLink]="['/product-detail', product.id]"><img [src]="product.imageURL" alt="{{product.id}}/{{product.name}}.img" class="img-fluid"></a>
+                    </figure>
+                    <div class="block-4-text p-4">
+                      <h3><a [routerLink]="['/product-detail', product.id]">{{product.name}}</a></h3>
+                      <p class="mb-0">{{product.category}}</p>
+                      <p class="text-primary font-weight-bold">${{product.price}}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </ng-container>
+              </ng-container>
+              
+              
+            </div>
+            
             
 
 
-          </div>
+          
           <div class="row" data-aos="fade-up">
             <div class="col-md-12 text-center">
               <div class="site-block-27">
@@ -117,10 +127,10 @@
             <h3 class="mb-3 h6 text-uppercase text-black d-block">Categories</h3>
             <ul class="list-unstyled mb-0">
               <li class="mb-1"><a (click)="loadProducts()" class="d-flex category-link">
-                <span style="color: red;">All</span> <span class="text-black ml-auto">(2,220)</span></a></li>
-              <li class="mb-1"><a (click)="loadProductByCategory('Men')" class="d-flex category-link"><span>Men</span> <span class="text-black ml-auto">(2,220)</span></a></li>
-              <li class="mb-1"><a (click)="loadProductByCategory('Women')" class="d-flex category-link"><span>Women</span> <span class="text-black ml-auto">(2,550)</span></a></li>
-              <li class="mb-1"><a (click)="loadProductByCategory('Kids')" class="d-flex category-link"><span>Kids</span> <span class="text-black ml-auto">(2,124)</span></a></li>
+                <span style="color: red;">All</span> <span class="text-black ml-auto"></span></a></li>
+              <li class="mb-1"><a (click)="loadProductByCategory('Men')" class="d-flex category-link"><span>Men</span> <span class="text-black ml-auto"></span></a></li>
+              <li class="mb-1"><a (click)="loadProductByCategory('Women')" class="d-flex category-link"><span>Women</span> <span class="text-black ml-auto"></span></a></li>
+              <li class="mb-1"><a (click)="loadProductByCategory('Kids')" class="d-flex category-link"><span>Kids</span> <span class="text-black ml-auto"></span></a></li>
             </ul>
           </div>
 
@@ -134,13 +144,16 @@
             <div class="mb-4">
               <h3 class="mb-3 h6 text-uppercase text-black d-block">Size</h3>
               <label for="s_sm" class="d-flex">
-                <input type="checkbox" id="s_sm" class="mr-2 mt-1"> <span class="text-black">Small (2,319)</span>
+                <input type="checkbox" id="s_sm" (change)="onCheckboxChange($event, 'Small')" class="mr-2 mt-1  category-link"> <span class="text-black category-link">Small </span>
               </label>
               <label for="s_md" class="d-flex">
-                <input type="checkbox" id="s_md" class="mr-2 mt-1"> <span class="text-black">Medium (1,282)</span>
+                <input type="checkbox" id="s_md" (change)="onCheckboxChange($event, 'Medium')" class="mr-2 mt-1 category-link"> <span class="text-black category-link">Medium </span>
               </label>
               <label for="s_lg" class="d-flex">
-                <input type="checkbox" id="s_lg" class="mr-2 mt-1"> <span class="text-black">Large (1,392)</span>
+                <input type="checkbox" id="s_lg" (change)="onCheckboxChange($event, 'Large')" class="mr-2 mt-1 category-link"> <span class="text-black category-link">Large </span>
+              </label>
+              <label for="s_xlg" class="d-flex">
+                <input type="checkbox" id="s_xlg" (change)="onCheckboxChange($event, 'Extra large')" class="mr-2 mt-1 category-link"> <span class="text-black category-link">Extra Large </span>
               </label>
             </div>
 
@@ -148,7 +161,7 @@
               <h3 class="mb-3 h6 text-uppercase text-black d-block">Color</h3>
               <div class="color-container">
                 <ng-container *ngFor="let color of colors">
-                  <a href="#" class="d-flex color-item align-items-center">
+                  <a (click)="loadProductByColor(color.name)" class="d-flex color-item align-items-center category-link">
                     <span class="color-swatch d-inline-block mr-2" [ngStyle]="{
                       'background-color': color.hexValue,
                       'width': '20px',

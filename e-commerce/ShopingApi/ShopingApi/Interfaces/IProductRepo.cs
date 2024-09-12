@@ -19,5 +19,7 @@ namespace ShopingApi.Interfaces
         Task AddItemSizes(List<Size> sizes,int itemID);
 
         Task<IEnumerable<ProductViewModel>> GetAllProductViewModelsAsync();
+        Task<IEnumerable<ProductViewModel>> GetItemsBySizesAsync(List<string> sizes);
+        Task<IEnumerable<ProductViewModel>> GetItemsByColorAsync(string color);
     }
 }

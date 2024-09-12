@@ -21,9 +21,9 @@ namespace ShopingApi.Models
         [MaxLength(500)]
         public string? Description { get; set; }
 
-        public List<Size>? Size { get; set; }
+        public ICollection<ItemSizes>? Sizes { get; set; }
 
-        public List<Color>? Colors { get; set; }
+        public ICollection<ItemColors>? Colors { get; set; }
 
         [Range(1, int.MaxValue)]
         public int Quantity { get; set; } = 1;

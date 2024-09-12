@@ -12,8 +12,10 @@ using ShopingApi.Repository;
 using ShopingApi.Services;
 using System.Text;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.SpaServices.Extensions; // <-- Add this
 
 var builder = WebApplication.CreateBuilder(args);
+
 // Add services to the container.
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -22,10 +24,19 @@ builder.Services.AddControllers()
     });
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Shopping API",
+        Version = "v1"
+    });
+});
+
 // Configure the database context for Identity
 builder.Services.AddDbContext<Db_Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 builder.Services.AddScoped<IPhotoService, PhotoService>();
 builder.Services.AddScoped<IProductRepo, ProductRepo>();
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
@@ -42,9 +53,9 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
     .AddEntityFrameworkStores<Db_Context>()
     .AddDefaultTokenProviders();
 
-
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -64,46 +75,50 @@ builder.Services.AddAuthentication(options =>
         };
     });
 
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "FrontendUI",
         policy =>
         {
-            policy.WithOrigins("http://localhost:4200")
+            //policy.WithOrigins("http://www.youcefbourouba.somee.com")
+            policy.WithOrigins("http://youcefbourouba.somee.com", "http://localhost:4200")
                   .AllowAnyMethod()
                   .AllowAnyHeader();
         });
 });
 
 
-builder.Services.Configure<FormOptions>(options =>
-{
-    options.MultipartBodyLengthLimit = 104857600; // Set your limit
-});
+
 var app = builder.Build();
-app.UseCors("FrontendUI");  
+
+app.UseCors("FrontendUI");
+
+// Seed initial data
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     await SeedData.Initialize(services);
 }
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Shopping API V1");
+    });
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles(); // Ensure static files are served, if any
+app.UseStaticFiles(); // Serve static files (Angular build from wwwroot)
 
-app.UseSession(); // Place before Authentication and Authorization
+app.UseSession(); // Must be placed before Authentication and Authorization
 
-app.UseAuthentication();
-app.UseAuthorization();
+app.UseAuthentication(); // Authentication middleware
+app.UseAuthorization();  // Authorization middleware
 
 app.MapControllers();
+app.MapFallbackToFile("index.html"); // Serve Angular front-end as fallback
 
 app.Run();

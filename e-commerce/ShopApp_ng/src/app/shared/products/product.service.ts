@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ProductViewModel } from '../../Models/productViewModel/product-view-model';
 import { Observable } from 'rxjs';
@@ -31,5 +31,19 @@ export class ProductService {
   getProductsByCategory(Category : any) : Observable<any>{
     return this.http.get<ProductViewModel[]>(`${this.apiGetProductView}/getProductByCategory/`+Category);
   }
+
+  getProductBySizes(sizes: string[]): Observable<ProductViewModel[]> {
+    let params = new HttpParams();
+    sizes.forEach(size => {
+        params = params.append('sizes', size);
+    });
+  
+    return this.http.get<ProductViewModel[]>(`${this.apiGetProductView}/getProductBySizes/`, { params });
+  }
+
+  getProductsByColor(color: any): Observable<ProductViewModel[]> {
+    return this.http.get<ProductViewModel[]>(`${this.apiGetProductView}/getProductByColor/`+color);
+  }
+  
 
 }

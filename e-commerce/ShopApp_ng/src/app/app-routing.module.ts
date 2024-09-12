@@ -12,7 +12,7 @@ import { CartComponent } from './components/cart/cart.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [AuthGuard] },
   { path: 'signUp', component: SignUpComponent },
-  {path: '',component: IndexComponent, canActivate: [AuthGuard]},
+  {path: '', component: IndexComponent,canActivate: []},
   { path: 'logOut', component: LogOutComponent },
   { path: 'shop', component: ShopComponent },
   { path: 'cart', component: CartComponent },

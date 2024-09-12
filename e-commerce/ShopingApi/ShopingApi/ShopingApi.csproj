@@ -7,9 +7,111 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\assets\fonts\icomoon\demo-files\demo.js" />
+    <None Include="wwwroot\assets\fonts\icomoon\fonts\icomoon.svg" />
+    <None Include="wwwroot\assets\js\aos.js" />
+    <None Include="wwwroot\assets\js\bootstrap.min.js" />
+    <None Include="wwwroot\assets\js\jquery-3.3.1.min.js" />
+    <None Include="wwwroot\assets\js\jquery.magnific-popup.min.js" />
+    <None Include="wwwroot\assets\js\main.js" />
+    <None Include="wwwroot\assets\js\owl.carousel.min.js" />
+    <None Include="wwwroot\assets\js\popper.min.js" />
+    <None Include="wwwroot\assets\js\slick.min.js" />
+    <None Include="wwwroot\assets\scss\bootstrap\bootstrap-grid.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\bootstrap-reboot.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\bootstrap.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\mixins\_alert.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\mixins\_background-variant.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\mixins\_badge.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\mixins\_border-radius.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\mixins\_box-shadow.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\mixins\_breakpoints.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\mixins\_buttons.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\mixins\_caret.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\mixins\_clearfix.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\mixins\_float.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\mixins\_forms.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\mixins\_gradients.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\mixins\_grid-framework.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\mixins\_grid.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\mixins\_hover.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\mixins\_image.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\mixins\_list-group.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\mixins\_lists.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\mixins\_nav-divider.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\mixins\_pagination.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\mixins\_reset-text.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\mixins\_resize.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\mixins\_screen-reader.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\mixins\_size.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\mixins\_table-row.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\mixins\_text-emphasis.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\mixins\_text-hide.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\mixins\_text-truncate.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\mixins\_transition.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\mixins\_visibility.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\utilities\_align.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\utilities\_background.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\utilities\_borders.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\utilities\_clearfix.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\utilities\_display.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\utilities\_embed.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\utilities\_flex.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\utilities\_float.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\utilities\_position.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\utilities\_screenreaders.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\utilities\_shadows.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\utilities\_sizing.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\utilities\_spacing.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\utilities\_text.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\utilities\_visibility.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_alert.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_badge.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_breadcrumb.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_button-group.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_buttons.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_card.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_carousel.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_close.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_code.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_custom-forms.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_dropdown.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_forms.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_functions.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_grid.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_images.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_input-group.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_jumbotron.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_list-group.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_media.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_mixins.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_modal.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_nav.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_navbar.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_pagination.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_popover.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_print.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_progress.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_reboot.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_root.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_tables.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_tooltip.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_transitions.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_type.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_utilities.scss" />
+    <None Include="wwwroot\assets\scss\bootstrap\_variables.scss" />
+    <None Include="wwwroot\assets\scss\style.scss" />
+    <None Include="wwwroot\assets\scss\_site-base.scss" />
+    <None Include="wwwroot\assets\scss\_site-blocks.scss" />
+    <None Include="wwwroot\assets\scss\_site-navbar.scss" />
+    <None Include="wwwroot\media\icomoon-T65ZMNTM.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CloudinaryDotNet" Version="1.26.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="8.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.7">
@@ -18,10 +120,6 @@
     </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.1" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>
