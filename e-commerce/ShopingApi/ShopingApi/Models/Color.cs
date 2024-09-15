@@ -12,6 +12,7 @@ namespace ShopingApi.Models
         // Additional properties, such as RGB values or Hex codes, can be added here
         [MaxLength(50)]
         public string? HexValue { get; set; }
+        public ICollection<ItemColors> ItemColors { get; set; }
         public Color() { }
         public Color(string name)
         {

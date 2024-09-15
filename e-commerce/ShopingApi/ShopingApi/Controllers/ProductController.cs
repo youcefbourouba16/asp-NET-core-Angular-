@@ -80,33 +80,32 @@ namespace ShopingApi.Controllers
             //            )
             //            .ToListAsync();
             var product = await _context.Items
-    .Where(p => p.Id == id)
-    .Include(p => p.ProductType)
-    .Include(p => p.Colors)
-    .Include(p => p.Sizes)
-    .Select(p => new ProductDetails
-    {
-            Id = p.Id,
-            Name = p.Name,
-            Description = p.Description,
-            Sizes = p.Sizes.Select(s => new Size
+            .Where(p => p.Id == id)
+            .Include(p => p.ProductType)
+            .Include(p => p.Colors)
+                .ThenInclude(ic => ic.Color) // Navigate to the Color entity, not ColorId
+            .Include(p => p.Sizes)
+            .Select(p => new ProductDetails
             {
-                // Assume SizeDetails is a class representing size details
-                Name = s.SizeID
-            }).ToList(),
-            Colors = p.Colors.Select(c => new Color
-            {
-                // Assume ColorDetails is a class representing color details
-                Name = c.ColorId
-            }).ToList(),
-            Quantity = p.Quantity,
-            Price = p.Price,
-            ImageURL = p.ImageURL,
-            productTypeId = p.ProductType.typeName,
-            Category = p.Category
-        })
-        .FirstOrDefaultAsync();
-
+                Id = p.Id,
+                Name = p.Name,
+                Description = p.Description,
+                Sizes = p.Sizes.Select(s => new Size
+                {
+                    Name = s.SizeID // Assuming SizeID represents the size identifier or name
+                }).ToList(),
+                Colors = p.Colors.Select(c => new Color
+                {
+                    Name = c.Color.Name, // Navigate to the Color's Name property
+                    HexValue = c.Color.HexValue // Include other properties if needed
+                }).ToList(),
+                Quantity = p.Quantity,
+                Price = p.Price,
+                ImageURL = p.ImageURL,
+                productTypeId = p.ProductType.typeName, // Assuming ProductType has a property TypeName
+                Category = p.Category
+            })
+            .FirstOrDefaultAsync();
 
             if (product == null)
             {
