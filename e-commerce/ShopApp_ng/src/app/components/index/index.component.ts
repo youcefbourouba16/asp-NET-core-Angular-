@@ -14,13 +14,16 @@ export class IndexComponent implements OnInit, AfterViewChecked {
 
   products: ProductViewModel[] = [];
   carouselInitialized = false;
+  isLoading: boolean = false;
 
   constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.productService.getProductNamesAndPrices().subscribe((data) => {
       this.products = data;
       console.log('Received data:', data);
+      this.isLoading = false;
     });
   }
 

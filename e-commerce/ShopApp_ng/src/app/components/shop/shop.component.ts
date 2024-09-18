@@ -40,10 +40,12 @@ export class ShopComponent implements OnInit{
     });
   }
   loadColors(): void{
+    this.isLoading = true;
     this.productService.getColors().subscribe({
       next: (data: Color[]) => {
         console.log('Products loaded:', data);
         this.colors = data;
+        this.isLoading = false;
       },
       error: (err) => {
         console.error('Error fetching product data', err);
@@ -51,13 +53,16 @@ export class ShopComponent implements OnInit{
     });
   }
   loadProductByCategory(Category : string){
+    this.isLoading = true;
     this.productService.getProductsByCategory(Category).subscribe({
       next: (data: ProductViewModel[]) => {
         console.log('Products loaded:', data);
         this.products = data;
+        this.isLoading = false;
       },
       error: (err) => {
         console.error('Error fetching product data', err);
+        this.isLoading = false;
       }
     });
   }
@@ -75,14 +80,17 @@ export class ShopComponent implements OnInit{
     }
   }
   loadProductBySizes(sizes: string[]): void {
+    this.isLoading = true;
     this.productService.getProductBySizes(sizes).subscribe({
         next: (data: ProductViewModel[]) => {
             console.log('Products loaded:', data);
             this.products = data;
+            this.isLoading = false;
         },
         error: (err) => {
           this.products=[]
             console.error('Error fetching product data', err);
+            this.isLoading = false;
         }
     });
   }
@@ -90,14 +98,17 @@ export class ShopComponent implements OnInit{
 
   /*   Colors section   */
   loadProductByColor(color: string): void {
+    this.isLoading = true;
     this.productService.getProductsByColor(color).subscribe({
       next: (data: ProductViewModel[]) => {
         console.log('Products loaded:', data);
         this.products = data;
+        this.isLoading = false;
       },
       error: (err) => {
         this.products=[]
         console.error('Error fetching product data', err);
+        this.isLoading = false;
       }
     });
 }
