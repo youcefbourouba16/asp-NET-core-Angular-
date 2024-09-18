@@ -16,6 +16,7 @@ import { DetailsComponent } from './components/details/details.component';
 import { CartComponent } from './components/cart/cart.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -30,7 +31,8 @@ export function tokenGetter() {
     LogOutComponent,
     ShopComponent,
     DetailsComponent,
-    CartComponent
+    CartComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -39,6 +41,7 @@ export function tokenGetter() {
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
+    
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

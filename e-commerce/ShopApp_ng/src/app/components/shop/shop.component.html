@@ -30,7 +30,16 @@
   display: inline-block;
   margin-right: 8px; /* Space between color swatch and text (adjust as needed) */
 }
-
+.loading_container {
+  position: absolute; /* Ensures that the container stays in place at the top */
+  top: 10%; /* Adjust the distance from the top as needed */
+  left: 50%; /* Moves the container horizontally to the middle */
+  transform: translateX(-50%); /* Centers the container exactly */
+  z-index: 1000; /* Ensures the loading spinner is on top of other content */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>
 <div class="bg-light py-3">
     <div class="container">
@@ -78,12 +87,17 @@
           <div class="row mb-5">
 
             <!-- Loading Spinner -->
+            <div class="loading_container">
+              <app-loading-spinner [isLoading]="isLoading">
+
+              </app-loading-spinner>
+            </div>
             
             
 
             <!-- products display-->
             
-              <ng-container  *ngFor="let product of products">
+              <ng-container  *ngFor="let product of products" >
                 <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up" >
                   <div class="block-4 text-center border">
                     <figure class="block-4-image">
@@ -105,7 +119,7 @@
 
 
           
-          <div class="row" data-aos="fade-up">
+          <div class="row" data-aos="fade-up" *ngIf="!isLoading"> 
             <div class="col-md-12 text-center">
               <div class="site-block-27">
                 <ul>
