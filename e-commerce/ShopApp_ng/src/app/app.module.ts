@@ -41,7 +41,6 @@ export function tokenGetter() {
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
-    
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

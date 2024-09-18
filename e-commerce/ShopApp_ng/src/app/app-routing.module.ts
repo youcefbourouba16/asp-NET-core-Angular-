@@ -12,12 +12,14 @@ import { CartComponent } from './components/cart/cart.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [AuthGuard] },
   { path: 'signUp', component: SignUpComponent },
-  {path: '', component: IndexComponent,canActivate: []},
-  { path: 'logOut', component: LogOutComponent },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: IndexComponent },
+  { path: 'logOut', component: LogOutComponent }, // Or handle it with a service
   { path: 'shop', component: ShopComponent },
   { path: 'cart', component: CartComponent },
   { path: 'product-detail/:id', component: DetailsComponent }
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { ProductViewModel } from '../../Models/productViewModel/product-view-model';
 import { ProductService } from '../../shared/products/product.service';
 import { CartService } from '../../shared/Cart/cart.service';
+import { Router } from '@angular/router';
 
 declare var $: any;  // Declare jQuery
 
@@ -14,23 +15,30 @@ export class IndexComponent implements OnInit, AfterViewChecked {
 
   products: ProductViewModel[] = [];
   carouselInitialized = false;
-  isLoading: boolean = false;
+  isLoading: boolean = false;  
 
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService,private router: Router) { }
 
   ngOnInit(): void {
-    this.isLoading = true;
-    this.productService.getProductNamesAndPrices().subscribe((data) => {
-      this.products = data;
-      console.log('Received data:', data);
-      this.isLoading = false;
+    
+    this.router.events.subscribe(() => {
+      this.isLoading=true;
+      this.productService.getProductNamesAndPrices().subscribe((data) => {
+        this.products = data;
+        console.log('Received data:', data);
+        this.isLoading=false;
+        
+      });
     });
+    
   }
 
   ngAfterViewChecked(): void {
     if (this.products.length > 0 && !this.carouselInitialized) {
+      
       this.initializeCarousel();
       this.carouselInitialized = true;  // Prevent reinitialization
+      
     }
   }
 
