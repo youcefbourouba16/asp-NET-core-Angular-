@@ -10,6 +10,17 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
+  .loading_container {
+    
+    top: 10%; /* Adjust the distance from the top as needed */
+    left: 50%; /* Moves the container horizontally to the middle */
+    
+    z-index: 1000; /* Ensures the loading spinner is on top of other content */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
 </style>
 
 <div class="bg-light py-3">
@@ -24,7 +35,13 @@ input[type="number"] {
   </div>
 </div>
 
-<div class="site-section">
+<div class="loading_container">
+  <app-loading-spinner [isLoading]="isLoading">
+
+  </app-loading-spinner>
+</div>
+
+<div class="site-section" *ngIf="!isLoading">
   <div class="container">
     <div class="row">
       <div class="col-md-6">

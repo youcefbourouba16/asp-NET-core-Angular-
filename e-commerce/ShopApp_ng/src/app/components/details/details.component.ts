@@ -18,6 +18,7 @@ export class DetailsComponent implements OnInit {
   productTocart: CartViewModel = new CartViewModel();
   sizeValueSelected: boolean = false;
   colorValueSelected: boolean = false;
+  isLoading: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -27,12 +28,16 @@ export class DetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.productId = Number(this.route.snapshot.paramMap.get('id'));
-    this.loadProductDetails();
+    this.router.events.subscribe(() => {
+      
+        this.productId = Number(this.route.snapshot.paramMap.get('id'));
+        this.loadProductDetails();
+    });
   }
 
   loadProductDetails() {
     if (this.productId) {
+      this.isLoading = true;
       this.productService.getProductByID(this.productId).subscribe({
         next: (data: ProductDetails) => {
           console.log('Product loaded:', data);
@@ -41,9 +46,11 @@ export class DetailsComponent implements OnInit {
           this.productTocart = new CartViewModel();
           this.sizeValueSelected = false;
           this.colorValueSelected = false;
+          this.isLoading = false;
         },
         error: (err) => {
           console.error('Error fetching product data', err);
+          this.isLoading = false;
         }
       });
     }
