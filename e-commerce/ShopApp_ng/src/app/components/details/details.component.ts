@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductDetails } from '../../Models/productViewModel/product-details';
 import { CartService } from '../../shared/Cart/cart.service';
 import { CartViewModel } from '../../Models/productViewModel/cart-view-model';
+import { DialogComponent } from '../dialog/dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -24,7 +26,8 @@ export class DetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private productService: ProductService,
     private cartService: CartService,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -65,11 +68,15 @@ export class DetailsComponent implements OnInit {
       this.productTocart.imageURL = product.imageURL;
 
       this.cartService.addtoCart(this.productTocart);
+      this.openDialog();
 
-      this.router.navigate(['/shop']);
-    } else {
-      console.log('Please select both size and color before adding to the cart.');
-    }
+      
+    
+  } else {
+    console.log('Please select both size and color before adding to the cart.');
+  }
+
+      
   }
 
   onChangeSize(size: string) {
@@ -90,5 +97,27 @@ export class DetailsComponent implements OnInit {
       this.productTocart.quantityBuying--;
     }
     
+  }
+
+  openDialog(){
+
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '300px',
+      data: {
+        title: 'Confirmation',  // Custom title
+        message: 'Voulez-vous continuer vos achats ou aller à votre panier ?',  // Custom message
+        cancelButtonText: 'Continuer les achats',  // Custom cancel button text
+        confirmButtonText: 'Aller au panier'  // Custom confirm button text
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.router.navigate(['/cart']);
+        
+      } else {
+        this.router.navigate(['/shop']);
+      }
+    });
   }
 }

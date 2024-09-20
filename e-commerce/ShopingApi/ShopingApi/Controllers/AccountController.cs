@@ -50,7 +50,8 @@ namespace ShopingApi.Controllers
                     if (result.Succeeded)
                     {
                         var token = GenerateJwtToken(user);
-                        return Ok(new { Token = token });
+
+                        return Ok(new { Token = token, Username=user.UserName });
 
                     }
                 }

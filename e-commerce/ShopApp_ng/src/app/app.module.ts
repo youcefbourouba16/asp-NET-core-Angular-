@@ -17,7 +17,10 @@ import { CartComponent } from './components/cart/cart.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
-
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';  // Optional, for buttons
+import { DialogComponent } from './components/dialog/dialog.component';
 export function tokenGetter() {
   return localStorage.getItem('token');
 }
@@ -32,7 +35,8 @@ export function tokenGetter() {
     ShopComponent,
     DetailsComponent,
     CartComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,
@@ -41,6 +45,9 @@ export function tokenGetter() {
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
+    BrowserAnimationsModule,   // Required for Angular Material animations
+    MatDialogModule,           // Required for using MatDialog
+    MatButtonModule,  
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
@@ -54,7 +61,8 @@ export function tokenGetter() {
   providers: [
     provideClientHydration(),
     provideHttpClient(withFetch()),
-    JwtHelperService
+    JwtHelperService,
+    provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]
 })

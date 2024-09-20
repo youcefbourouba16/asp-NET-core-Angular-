@@ -1,8 +1,76 @@
-<!-- <h1 mat-dialog-title>Confirmation</h1>
-<div mat-dialog-content>
-  <p>{{data.message}}</p>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No</button>
-  <button mat-button color="primary" (click)="onYesClick()">Yes</button>
-</div> -->
+<style>
+/* Dialog container */
+::ng-deep .mat-dialog-container {
+  padding: 20px;
+  background-color: #f4f6f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Title */
+.dialog-title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Content */
+.dialog-content {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* Actions (flexbox layout to space buttons) */
+.dialog-actions {
+  display: flex;
+  justify-content: center; /* Center the buttons */
+  gap: 20px; /* Add space between the buttons */
+  padding-top: 10px;
+}
+
+/* Buttons */
+.dialog-button {
+  font-family: 'Roboto', sans-serif;
+  text-transform: uppercase;
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 8px 20px;
+  background-color: #e0e0e0;
+  color: #666;
+  transition: background-color 0.3s ease;
+}
+
+.dialog-button:hover {
+  background-color: #d5d5d5;
+}
+
+.dialog-button-primary {
+  background-color: #3f51b5;
+  color: white;
+  border-radius: 8px;
+  padding: 8px 20px;
+}
+
+.dialog-button-primary:hover {
+  background-color: #354aa3;
+}
+
+
+
+</style>
+<h2 mat-dialog-title class="dialog-title">{{ data.title }}</h2>
+
+<mat-dialog-content class="dialog-content">
+  <p>{{ data.message }}</p>
+</mat-dialog-content>
+
+<mat-dialog-actions class="dialog-actions">
+  <button mat-button class="dialog-button cancel-button" (click)="onCancel()">{{ data.cancelButtonText }}</button>
+  <button mat-button color="primary" class="dialog-button confirm-button" (click)="onConfirm()">{{ data.confirmButtonText }}</button>
+</mat-dialog-actions>
