@@ -135,6 +135,8 @@ namespace ShopingApi.Controllers
             List<Size> sizes = _context.Sizes
                 .Where(c => vm.Size.Contains(c.Name))
                 .ToList();
+            ProductType productTypeItem = _context.ProductTypes.FirstOrDefault(c => c.typeName == vm.ProductTypeId);
+            
             var item = new Item
             {
                 Name = vm.Name,
@@ -142,8 +144,9 @@ namespace ShopingApi.Controllers
                 Quantity = vm.Quantity,
                 Price = vm.Price,
                 ImageURL = result.Url.ToString(),
-                productTypeId=vm.ProductTypeId,
+                productTypeId = vm.ProductTypeId,
                 Category = vm.Category.ToString(),
+                ProductType = productTypeItem
             };
             
             _productRepo.Add(item);

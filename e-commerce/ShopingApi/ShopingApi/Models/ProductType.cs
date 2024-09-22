@@ -9,5 +9,14 @@ namespace ShopingApi.Models
         [Key]
 
         public string typeName { get; set; }
+
+        public ProductType(string typeName)
+        {
+            this.typeName = typeName;
+        }
+        public ProductType()
+        {
+            
+        }
     }
 }

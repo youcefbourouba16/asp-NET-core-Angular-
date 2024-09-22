@@ -2,7 +2,7 @@ import { Color } from "./color_size/color";
 import { Size } from "./color_size/size";
 
 export class ProductDetails {
-    id: number  | undefined;
+    id: number=0;
     name: string | undefined;
     description?: string  | undefined;
     sizes?: Size[]  | undefined;
