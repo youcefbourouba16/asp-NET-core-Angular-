@@ -74,6 +74,14 @@ builder.Services.AddAuthentication(options =>
             ValidAudience = builder.Configuration["Jwt:Issuer"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
         };
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                context.Token = context.Request.Cookies["jwt"]; // Read JWT from the cookie
+                return Task.CompletedTask;
+            }
+        };
     });
 
 builder.Services.AddCors(options =>
@@ -83,9 +91,10 @@ builder.Services.AddCors(options =>
         {
             //policy.WithOrigins("http://www.youcefbourouba.somee.com")
             policy.WithOrigins("http://youcefbourouba.somee.com", "http://localhost:4200")
-                  .AllowAnyMethod()
-                  .AllowAnyHeader();
-        });
+                  .AllowCredentials()
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+});
 });
 
 

@@ -20,7 +20,7 @@ namespace ShopingApi.Controllers
 
         [HttpPost]
         [Route("api/Order/PlaceOrder")]
-        public async Task<IActionResult> PlaceOrder([FromForm] OrderViewModel order)
+        public async Task<IActionResult> PlaceOrder([FromBody] OrderViewModel order)
         {
             if (order == null)
             {

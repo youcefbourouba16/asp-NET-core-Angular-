@@ -3,7 +3,7 @@ import { CartViewModel } from "../productViewModel/cart-view-model";
 // Assuming CartViewModel and OrderItemViewModel have similar structure.
 // If not, update the mapping accordingly.
 export class OrderViewModel {
-    id: number = 0;
+    
     aspNetUsersId: string = '';
     orderDate: Date = new Date();
     totalAmount: number = 0;

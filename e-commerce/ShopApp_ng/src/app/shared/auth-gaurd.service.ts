@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { AuthService } from './auth.service'; // Make sure the AuthService is imported
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ export class AuthGuard implements CanActivate {
 
   constructor(private authService: AuthService, private router: Router) {}
 
+  // CanActivate method now checks authentication from the backend
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const isLoginRoute = state.url.includes('/login');
 
@@ -21,7 +23,7 @@ export class AuthGuard implements CanActivate {
 
           return true;
         }
-        this.router.navigate(['']); // Redirect to a disconnect page or home
+        
           return false;
         
       }

@@ -5,7 +5,7 @@ import { CartService } from '../../shared/Cart/cart.service';
 import { AccountSigninModel } from '../../Models/account-signin-model';
 import { AuthService } from '../../shared/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'; // import FormBuilder and Validators
-import { OrderItemViewModel } from '../../Models/OrderViewModel/orderviewmodel';
+import { OrderItemViewModel, OrderViewModel } from '../../Models/OrderViewModel/orderviewmodel';
 
 @Component({
   selector: 'app-checkout',
@@ -73,14 +73,15 @@ export class CheckoutComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.checkoutForm.invalid) {
-      console.error('Form is invalid');
-      return;
-    }
+    // if (this.checkoutForm.invalid) {
+    //   console.error('Form is invalid');
+    //   return;
+    // }
   
     // Create an OrderViewModel instance
-    const orderData: OrderItemViewModel = {
-      aspNetUsersId: this.vm.email,  // User's ID
+    let temp =sessionStorage.getItem('username')|| '';
+    const orderData: OrderViewModel = {
+      aspNetUsersId: sessionStorage.getItem('username') || '',   // User's ID
       orderDate: new Date(),            // Current date for the order
       totalAmount: this.grandTotal,     // The total amount for the order
       note: this.checkoutForm.get('orderNotes')?.value || '', // Optional order notes

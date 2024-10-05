@@ -101,7 +101,7 @@
                   <span class="text-black">Subtotal</span>
                 </div>
                 <div class="col-md-6 text-right">
-                  <strong class="text-black">$  {{ getTotalPrice() | number:'1.2-2' }}</strong>
+                  <strong class="text-black">$  {{ grandTotal | number:'1.2-2' }}</strong>
 
                 </div>
               </div>
@@ -110,7 +110,7 @@
                   <span class="text-black">Total (with Fee)</span>
                 </div>
                 <div class="col-md-6 text-right">
-                  <strong class="text-black">$  {{getTotalPrice()+1.24| number:'1.2-2'}}</strong>
+                  <strong class="text-black">$  {{grandTotal+1.24| number:'1.2-2'}}</strong>
                 </div>
               </div>
 

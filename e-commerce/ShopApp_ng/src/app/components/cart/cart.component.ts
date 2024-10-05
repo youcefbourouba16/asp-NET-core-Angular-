@@ -27,12 +27,14 @@ export class CartComponent implements OnInit {
   increaseQuantity(index : number){
     if (this.products[index].quantityBuying < this.products[index].quantity) {
       this.products[index].quantityBuying++;
+      this.grandTotal=this.cartService.getTotalPrice();
       this.cdr.detectChanges();
     }
   }
   decreaseQuantity(index : number){
     if(this.products[index].quantityBuying>1){
       this.products[index].quantityBuying--;
+      this.grandTotal=this.cartService.getTotalPrice();
       this.cdr.detectChanges();
     }
   }

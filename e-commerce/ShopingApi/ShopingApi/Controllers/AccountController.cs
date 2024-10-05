@@ -55,6 +55,16 @@ namespace ShopingApi.Controllers
 
             return Unauthorized(new { Error = "Email or Password are incorrect" });
         }
+        [HttpGet]
+        [Route("api/account/isAuthenticated")]
+        public IActionResult IsAuthenticated()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return Ok(true);
+            }
+            return Ok(false);
+        }
 
         [HttpPost]
         [Route("api/account/logout")]

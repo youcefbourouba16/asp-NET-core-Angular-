@@ -18,11 +18,12 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router, private jwtHelper: JwtHelperService) {}
 
+  // Login method, with 'withCredentials' to send and receive cookies
   login(vm: AccountViewModel): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, vm).pipe(
+    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, vm, { withCredentials: true }).pipe(
       tap((response: LoginResponse) => {
-        localStorage.setItem('token', response.token);
-        localStorage.setItem('username', response.username);
+        // No need to handle token manually, it's in HttpOnly cookie
+        sessionStorage.setItem('username', response.username);
         this.router.navigate(['/']);
       })
     );
@@ -32,13 +33,15 @@ export class AuthService {
     return this.http.post<SignUpResponse>(`${this.apiUrl}/register`, vm);
   }
 
-  isAuthenticated(): boolean {
-    const token = localStorage.getItem('token');
-    return !!token && !this.jwtHelper.isTokenExpired(token);
+  // Authenticated check (now you can only check by hitting a backend endpoint)
+  isAuthenticated(): Observable<boolean> {
+    return this.http.get<boolean>(`${this.apiUrl}/isAuthenticated`, { withCredentials: true });
   }
 
-  logout() {
-    localStorage.removeItem('token');
-    this.router.navigate(['/login']);
+  // Logout method, sends a request to delete the cookie
+  logout(): void {
+    this.http.post(`${this.apiUrl}/logout`, {}, { withCredentials: true }).subscribe(() => {
+      this.router.navigate(['/login']);
+    });
   }
 }
