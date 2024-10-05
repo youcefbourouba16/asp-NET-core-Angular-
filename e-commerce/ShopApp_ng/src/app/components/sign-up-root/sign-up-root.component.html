@@ -1,0 +1,63 @@
+<form #signupForm="ngForm">
+
+  <!-- Email Field -->
+  <div class="mb-3">
+    <label for="email" class="form-label">Email:</label>
+    <input
+      type="email"
+      id="email"
+      class="form-control"
+      required
+      [(ngModel)]="vm.email"
+      name="email"
+      #email="ngModel"
+      [ngClass]="{'is-invalid': email.invalid && (email.dirty || email.touched)}"
+    />
+    <div *ngIf="email.invalid && (email.dirty || email.touched)" class="invalid-feedback">
+      <div *ngIf="email.errors?.['required']">Email is required.</div>
+      <div *ngIf="email.errors?.['email']">Invalid email format.</div>
+    </div>
+  </div>
+
+  <!-- Password Field -->
+  <div class="mb-3">
+    <label for="password" class="form-label">Password:</label>
+    <input
+      type="password"
+      id="password"
+      class="form-control"
+      required
+      [(ngModel)]="vm.password"
+      name="password"
+      #password="ngModel"
+      [ngClass]="{'is-invalid': password.invalid && (password.dirty || password.touched)}"
+    />
+    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="invalid-feedback">
+      <div *ngIf="password.errors?.['required']">Password is required.</div>
+    </div>
+  </div>
+
+  <!-- Confirm Password Field -->
+  <div class="mb-3">
+    <label for="confirmPassword" class="form-label">Confirm Password:</label>
+    <input
+      type="password"
+      id="confirmPassword"
+      class="form-control"
+      required
+      [(ngModel)]="vm.conffpassword"
+      name="confirmPassword"
+      #confirmPassword="ngModel"
+      [ngClass]="{'is-invalid': (confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)) || (vm.password !== vm.conffpassword && confirmPassword.dirty)}"
+    />
+    <div *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)" class="invalid-feedback">
+      <div *ngIf="confirmPassword.errors?.['required']">Confirm Password is required.</div>
+      <div *ngIf="vm.password !== vm.conffpassword && confirmPassword.dirty">Passwords do not match.</div>
+    </div>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+    {{ errorMessage }}
+  </div>
+</form>

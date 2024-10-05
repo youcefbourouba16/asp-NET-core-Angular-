@@ -22,6 +22,7 @@ export class AuthService {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, vm).pipe(
       tap((response: LoginResponse) => {
         localStorage.setItem('token', response.token);
+        localStorage.setItem('username', response.username);
         this.router.navigate(['/']);
       })
     );

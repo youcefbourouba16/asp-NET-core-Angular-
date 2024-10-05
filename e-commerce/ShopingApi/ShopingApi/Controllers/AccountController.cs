@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using ShopingApi.Data;
 using ShopingApi.Models;
 using ShopingApi.ViewModels.Account;
 using System.IdentityModel.Tokens.Jwt;
@@ -16,21 +14,15 @@ namespace ShopingApi.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
-        private readonly Db_Context _db_context;
         private readonly IConfiguration _configuration;
-        public IActionResult Index()
-        {
-            return View();
-        }
 
-        public AccountController(UserManager<AppUser> UserManager,SignInManager<AppUser> SignInManager,
-            Db_Context Db_Context,IConfiguration configuration)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IConfiguration configuration)
         {
-            _userManager = UserManager;
-            _signInManager = SignInManager;
-            _db_context = Db_Context;
+            _userManager = userManager;
+            _signInManager = signInManager;
             _configuration = configuration;
         }
+
         [HttpPost]
         [Route("api/account/login")]
         public async Task<IActionResult> Login([FromBody] AccountViewModel VM)
@@ -41,23 +33,35 @@ namespace ShopingApi.Controllers
             }
 
             var user = await _userManager.FindByEmailAsync(VM.Email);
-            if (user != null)
+            if (user != null && await _userManager.CheckPasswordAsync(user, VM.Password))
             {
-                var passwordCheck = await _userManager.CheckPasswordAsync(user, VM.Password);
-                if (passwordCheck)
+                var result = await _signInManager.PasswordSignInAsync(user, VM.Password, true, false);
+                if (result.Succeeded)
                 {
-                    var result = await _signInManager.PasswordSignInAsync(user, VM.Password, true, false);
-                    if (result.Succeeded)
+                    var token = await GenerateJwtToken(user);
+
+                    var cookieOptions = new CookieOptions
                     {
-                        var token = GenerateJwtToken(user);
+                        HttpOnly = true,
+                        Secure = true, // Secure for HTTPS
+                        SameSite = SameSiteMode.Strict,
+                        Expires = DateTime.UtcNow.AddHours(5)
+                    };
+                    Response.Cookies.Append("jwt", token, cookieOptions);
 
-                        return Ok(new { Token = token, Username=user.UserName });
-
-                    }
+                    return Ok(new { Username = user.UserName });
                 }
             }
 
             return Unauthorized(new { Error = "Email or Password are incorrect" });
+        }
+
+        [HttpPost]
+        [Route("api/account/logout")]
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("jwt");
+            return Ok();
         }
 
         [HttpPost]
@@ -69,42 +73,38 @@ namespace ShopingApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var adminUser = await _userManager.FindByEmailAsync(VM.Email);
-            if (adminUser == null)
+            var existingUser = await _userManager.FindByEmailAsync(VM.Email);
+            if (existingUser == null)
             {
-                int indexOFUserName = VM.Email.IndexOf('@');
-                string userName = VM.Email.Substring(0, indexOFUserName);
-                var newAdminUser = new AppUser()
-                {
-                    UserName = userName,
-                    Email = VM.Email,
-                    EmailConfirmed = true,
-                };
-                var result = await _userManager.CreateAsync(newAdminUser, VM.Password);
-                
+                var userName = VM.Email.Substring(0, VM.Email.IndexOf('@'));
+                var newUser = new AppUser { UserName = userName, Email = VM.Email, EmailConfirmed = true };
+
+                var result = await _userManager.CreateAsync(newUser, VM.Password);
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(newAdminUser, VM.Role);
+                    await _userManager.AddToRoleAsync(newUser, VM.Role);
                     return Ok(new { Message = "User registered successfully" });
                 }
-                else
-                {
-                    // Handle errors during user creation
-                    return BadRequest(result.Errors);
-                }
+
+                return BadRequest(result.Errors);
             }
-            else
-            {
-                return BadRequest(new { Error = "User already exists." });
-            }
+
+            return BadRequest(new { Error = "User already exists." });
         }
-        private string GenerateJwtToken(IdentityUser user)
+
+        private async Task<string> GenerateJwtToken(AppUser user)
         {
-            var claims = new[]
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+            var claims = new List<Claim>
             {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Email),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-        };
+                new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.Name, user.UserName)
+            };
+
+            // Add role claims
+            claims.AddRange(userRoles.Select(role => new Claim(ClaimTypes.Role, role)));
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -118,6 +118,5 @@ namespace ShopingApi.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-
     }
 }

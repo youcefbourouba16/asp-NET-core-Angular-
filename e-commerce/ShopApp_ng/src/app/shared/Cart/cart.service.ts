@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
+import { CartViewModel } from '../../Models/productViewModel/cart-view-model';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,8 @@ import { BehaviorSubject } from 'rxjs';
 export class CartService {
 
   public cartItemList : any =[]
-  public productList = new BehaviorSubject<any>([]);
+  public productList = new BehaviorSubject<CartViewModel[]>([]);
+
 
   constructor(private toastr : ToastrService) { }
   getProducts(){
@@ -27,16 +29,23 @@ export class CartService {
     return currentList.some((item: any) => item.id === productId);
   }
 
-  addtoCart(product: any) {
-    if (!this.productExists(product.id)) {
+  addtoCart(product: CartViewModel) {
+    const currentProducts = this.productList.getValue();
+    
+    // Check if the product already exists
+    const existingProductIndex = currentProducts.findIndex(p => p.id === product.id);
+    
+    if (existingProductIndex === -1) {
+      // Product does not exist, add it
       this.cartItemList.push(product);
-      this.productList.next(this.cartItemList);
-      this.getTotalPrice();
-      this.toastr.info('Added ','Item Added succesfully .')
+      this.productList.next([...this.cartItemList]); // Push a new reference to the BehaviorSubject
+      this.toastr.info('Item Added', 'Item successfully added to the cart.');
     } else {
-      this.toastr.error('Error ','Item already exist in the cart !')
+      // Product already exists, show error
+      this.toastr.error('Error', 'Item already exists in the cart!');
     }
   }
+  
   getTotalPrice() : number{
     let grandTotal = 0;
     this.cartItemList.map((a:any)=>{

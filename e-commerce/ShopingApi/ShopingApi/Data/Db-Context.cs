@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ShopingApi.Models;
+using ShopingApi.Models.order;
 using System.Collections.Generic;
 
 namespace ShopingApi.Data
@@ -17,11 +18,18 @@ namespace ShopingApi.Data
         public DbSet<Size> Sizes { get;set; }
         public DbSet<ItemColors> ItemColors { get;set; }
         public DbSet<ItemSizes> ItemSizes { get;set; }
+
+        public DbSet<Order> Orders { get;set; }
+        public DbSet<OrderItem> OrderItems { get;set; }
+        public DbSet<Shipping> Shippings { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configure composite key for ItemColors
             modelBuilder.Entity<ItemColors>()
                 .HasKey(ic => new { ic.ColorId, ic.ItemID });
+            modelBuilder.Entity<OrderItem>()
+               .HasKey(ic => new { ic.OrderId, ic.ItemId });
 
             // Configure relationships
             modelBuilder.Entity<ItemColors>()
@@ -33,6 +41,11 @@ namespace ShopingApi.Data
                 .HasOne(ic => ic.Color)
                 .WithMany(c => c.ItemColors)
                 .HasForeignKey(ic => ic.ColorId);
+
+            modelBuilder.Entity<OrderItem>()
+                .HasOne(ic => ic.Order)
+                .WithMany(c => c.OrderItems)
+                .HasForeignKey(ic => ic.OrderId);
 
             base.OnModelCreating(modelBuilder);
         }

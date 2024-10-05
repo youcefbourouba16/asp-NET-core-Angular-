@@ -8,6 +8,7 @@ import { LogOutComponent } from './components/log-out/log-out.component';
 import { ShopComponent } from './components/shop/shop.component';
 import { DetailsComponent } from './components/details/details.component';
 import { CartComponent } from './components/cart/cart.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [AuthGuard] },
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path: 'logOut', component: LogOutComponent }, // Or handle it with a service
   { path: 'shop', component: ShopComponent },
   { path: 'cart', component: CartComponent },
-  { path: 'product-detail/:id', component: DetailsComponent }
+  { path: 'product-detail/:id', component: DetailsComponent },
+  { path: 'checkout', component: CheckoutComponent }
 ];
 
 

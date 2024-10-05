@@ -21,6 +21,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';  // Optional, for buttons
 import { DialogComponent } from './components/dialog/dialog.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import { SignUpRootComponent } from './components/sign-up-root/sign-up-root.component';
 export function tokenGetter() {
   return localStorage.getItem('token');
 }
@@ -36,7 +38,9 @@ export function tokenGetter() {
     DetailsComponent,
     CartComponent,
     LoadingSpinnerComponent,
-    DialogComponent
+    DialogComponent,
+    CheckoutComponent,
+    SignUpRootComponent
   ],
   imports: [
     BrowserModule,

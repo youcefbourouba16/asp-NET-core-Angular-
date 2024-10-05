@@ -1,6 +1,8 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CartService } from '../../shared/Cart/cart.service';
 import { CartViewModel } from '../../Models/productViewModel/cart-view-model';
+import { Router } from '@angular/router';
+import { AccountSigninModel } from '../../Models/account-signin-model';
 
 @Component({
   selector: 'app-cart',
@@ -10,7 +12,10 @@ import { CartViewModel } from '../../Models/productViewModel/cart-view-model';
 export class CartComponent implements OnInit {
   public products : CartViewModel[] = [];
   public grandTotal !: number;
-  constructor(private cartService : CartService, private cdr : ChangeDetectorRef) { }
+  
+  constructor(private cartService : CartService,
+              private cdr : ChangeDetectorRef,
+              private router : Router) { }
 
   ngOnInit(): void {
     this.cartService.getProducts()
@@ -39,4 +44,7 @@ export class CartComponent implements OnInit {
     return this.cartService.getTotalPrice()
   }
 
+  
+
+  
 }

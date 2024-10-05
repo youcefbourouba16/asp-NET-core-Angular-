@@ -58,27 +58,7 @@ namespace ShopingApi.Controllers
         [Route("api/Product/getProductDetails/{id}")]
         public async Task<ActionResult<ProductDetails>> GetProductDetailsByID(int id)
         {
-            //List<Color> colors = await _context.ItemColors
-            //            .Where(ic => ic.ItemID == id)
-            //            .Join(
-            //                _context.Colors,
-            //                ic => ic.ColorId,
-            //                c => c.Name,
-            //                (ic, c) => c
-            //            )
-            //            .ToListAsync();
 
-
-
-            //List<Size> sizes = await _context.ItemSizes
-            //            .Where(ic => ic.ItemID == id)
-            //            .Join(
-            //                _context.Sizes,
-            //                ic => ic.SizeID,
-            //                c => c.Name,
-            //                (ic, c) => c
-            //            )
-            //            .ToListAsync();
             var product = await _context.Items
             .Where(p => p.Id == id)
             .Include(p => p.ProductType)
