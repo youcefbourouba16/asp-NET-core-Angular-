@@ -11,10 +11,10 @@ namespace ShopingApi.Models.order
         public int Id { get; set; }
 
         [ForeignKey("AspNetUsers")]
-        public string AspNetUsersId { get; set; }
+        public string? AspNetUsersId { get; set; }
 
         // Navigation property for AspNetUsers
-        public virtual AppUser AspNetUsers { get; set; }
+        public virtual AppUser? AspNetUsers { get; set; }
 
         public DateTime OrderDate { get; set; }
 

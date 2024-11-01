@@ -1,9 +1,12 @@
-﻿using ShopingApi.ViewModels;
+﻿using ShopingApi.Models.order;
+using ShopingApi.ViewModels;
 
 namespace ShopingApi.Interfaces
 {
     public interface IOrderRepo
     {
-        Task AddOrder(OrderViewModel orderViewModel);
+        bool AddOrder(Order vm );
+        bool AddShipping(Shipping vm );
+        bool Save();
     }
 }

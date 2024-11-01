@@ -23,6 +23,7 @@ import { MatButtonModule } from '@angular/material/button';  // Optional, for bu
 import { DialogComponent } from './components/dialog/dialog.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { SignUpRootComponent } from './components/sign-up-root/sign-up-root.component';
+import { ThnkyouComponent } from './components/thankyou/thnkyou/thnkyou.component';
 export function tokenGetter() {
   return localStorage.getItem('token');
 }
@@ -40,7 +41,8 @@ export function tokenGetter() {
     LoadingSpinnerComponent,
     DialogComponent,
     CheckoutComponent,
-    SignUpRootComponent
+    SignUpRootComponent,
+    ThnkyouComponent
   ],
   imports: [
     BrowserModule,

@@ -37,6 +37,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Race" asp-action="Index" >Races</a>
                         </li>
+
                         @if (!User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item ms-auto">

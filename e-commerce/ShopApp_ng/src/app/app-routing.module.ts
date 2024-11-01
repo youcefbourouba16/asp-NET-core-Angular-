@@ -9,6 +9,7 @@ import { ShopComponent } from './components/shop/shop.component';
 import { DetailsComponent } from './components/details/details.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
+import { ThnkyouComponent } from './components/thankyou/thnkyou/thnkyou.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [AuthGuard] },
@@ -19,7 +20,8 @@ const routes: Routes = [
   { path: 'shop', component: ShopComponent },
   { path: 'cart', component: CartComponent },
   { path: 'product-detail/:id', component: DetailsComponent },
-  { path: 'checkout', component: CheckoutComponent }
+  { path: 'checkout', component: CheckoutComponent },
+  { path: 'thankYou', component: ThnkyouComponent }
 ];
 
 

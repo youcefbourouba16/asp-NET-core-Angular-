@@ -19,6 +19,7 @@ export class CheckoutComponent implements OnInit {
   public checkoutForm!: FormGroup; // FormGroup to hold form controls
   countriesList: any[] = [];
   isLoading: boolean = false;
+  purchaseMade: boolean = false;  // Track purchase state
 
   // Account data
   vm: AccountSigninModel = new AccountSigninModel(); // Model data for the form
@@ -49,7 +50,7 @@ export class CheckoutComponent implements OnInit {
       postalCode: ['', Validators.required],
       emailAddress: ['', [Validators.required, Validators.email]],
       phone: ['', Validators.required],
-      country: [null, Validators.required],
+      country: [null, Validators.required], 
       orderNotes: [''],
       createAccount: [false], // Added create account checkbox
       password: [''], // Optional, for account creation
@@ -104,7 +105,8 @@ export class CheckoutComponent implements OnInit {
     this.checkoutService.postOrder(orderData).subscribe({
       next: (response) => {
         console.log('Order submitted successfully:', response);
-        // Perform success actions, such as navigating to a success page
+        this.purchaseMade = true;  // Update state to indicate purchase is made
+        
       },
       error: (err) => {
         console.error('Order submission failed:', err);

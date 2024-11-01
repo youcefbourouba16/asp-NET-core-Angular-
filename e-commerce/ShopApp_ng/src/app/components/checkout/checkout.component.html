@@ -1,7 +1,7 @@
-<div class="site-section">
-  <div class="container">
+<div class="site-section" >
+  <div class="container" *ngIf="!purchaseMade">
     <div class="row mb-5">
-      <div class="col-md-12">
+      <div class="col-md-12" >
         <div class="border p-4 rounded" role="alert">
           Returning customer? <a routerLink="/login">Click here</a> to login
         </div>
@@ -11,18 +11,19 @@
       <div class="col-md-6 mb-5 mb-md-0">
         <h2 class="h3 mb-3 text-black">Billing Details</h2>
         <div class="p-3 p-lg-5 border">
-          <!-- Country selection -->
+          
+          <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+            <!-- Country selection -->
           <div class="form-group">
             <label for="c_country" class="text-black">Country <span class="text-danger">*</span></label>
             <select id="c_country" class="form-control" formControlName="country">
-              <option value="0">Select a country</option>
-              <ng-container *ngFor="let country of countriesList, let i = index">
-                <option value="{{country.name.common}}">{{ country.name.common }}</option>
+              <option value="">Select a country</option>
+              <ng-container *ngFor="let country of countriesList">
+                <option [value]="country.name.common">{{ country.name.common }}</option>
               </ng-container>
             </select>
           </div>
 
-          <form (ngSubmit)="onSubmit()">
             <div class="form-group row">
               <div class="col-md-6">
                 <label for="c_fname" class="text-black">First Name <span class="text-danger">*</span></label>
@@ -188,5 +189,8 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="container" *ngIf="purchaseMade">
+    <app-thnkyou ></app-thnkyou>
   </div>
 </div>

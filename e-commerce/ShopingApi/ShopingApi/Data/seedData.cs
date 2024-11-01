@@ -49,7 +49,31 @@ namespace ShopingApi.Data
                     var result = await userManager.CreateAsync(user);
                     if (result.Succeeded)
                     {
-                        await userManager.AddToRolesAsync(user, roles);
+                        await userManager.AddToRolesAsync(user, roles);/// make this admin
+                    }
+                }
+                var userGuest = new AppUser
+                {
+                    Email = "Guest@example.com",
+                    NormalizedEmail = "GUEST@EXAMPLE.COM",
+                    UserName = "Guest",
+                    NormalizedUserName = "GUEST",
+                    PhoneNumber = "+222111111111",
+                    EmailConfirmed = true,
+                    PhoneNumberConfirmed = true,
+                    SecurityStamp = Guid.NewGuid().ToString("D")
+                };
+
+                if (userManager.Users.All(u => u.UserName != userGuest.UserName))
+                {
+                    var password = new PasswordHasher<AppUser>();
+                    var hashed = password.HashPassword(userGuest, "secret");
+                    user.PasswordHash = hashed;
+
+                    var result = await userManager.CreateAsync(userGuest);
+                    if (result.Succeeded)
+                    {
+                        await userManager.AddToRoleAsync(userGuest, "user");
                     }
                 }
 

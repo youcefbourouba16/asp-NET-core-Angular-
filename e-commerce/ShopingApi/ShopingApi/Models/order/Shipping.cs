@@ -10,7 +10,7 @@ namespace ShopingApi.Models.order
         public int Id { get; set; }
 
         [ForeignKey("Order")]
-        public string OrderId { get; set; }
+        public int OrderId { get; set; }
 
         public string State { get; set; }
         public string Postal_code { get; set; }
