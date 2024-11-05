@@ -2,6 +2,7 @@
 body {
   line-height: 1.7;
   color: #8c92a0;
+  color: #4a4f57; /* Darker color for better contrast */
   font-weight: 300;
   font-size: 16px; }
 
@@ -15,10 +16,12 @@ body {
 
 a {
   -webkit-transition: .3s all ease;
+  color: #0073e6; /* Higher contrast for accessibility */
   -o-transition: .3s all ease;
   transition: .3s all ease; }
   a:hover {
-    text-decoration: none; }
+    text-decoration: none;
+color: #005bb5; /* Slightly darker on hover */	}
 
 .text-black {
   color: #000; }
@@ -61,7 +64,7 @@ a {
     -webkit-box-shadow: none !important;
     box-shadow: none !important; }
   .btn.btn-secondary {
-    background-color: #e6e7e9;
+    background-color: #d1d3d7; /* Increased contrast */
     border-color: #e6e7e9;
     color: #000; }
   .btn.btn-sm {
@@ -94,7 +97,8 @@ a {
 
 .site-section-heading {
   font-size: 30px;
-  color: #25262a;
+  color: #3a3b3f; /* Darker for readability */
+  
   position: relative; }
   .site-section-heading:before {
     content: "";
@@ -124,9 +128,9 @@ a {
   .site-footer ul li {
     margin-bottom: 10px; }
     .site-footer ul li a {
-      color: #5c626e; }
+      color: #4a4f57; /* Darker color */ }
       .site-footer ul li a:hover {
-        color: #7971ea; }
+        color: #7971ea;  }
   .site-footer .footer-heading {
     font-size: 20px;
     color: #25262a; }
@@ -155,7 +159,7 @@ a {
     text-decoration: none; }
   .site-navbar .site-logo a {
     text-transform: uppercase;
-    color: #25262a;
+    color: #2b2c30; /* Increased contrast for the logo */
     letter-spacing: .2em;
     font-size: 20px;
     padding-left: 10px;
@@ -164,9 +168,10 @@ a {
     .site-navbar .site-logo a:hover {
       text-decoration: none; }
   .site-navbar a {
-    color: #868995; }
+	  color: #3d3f45; /* Darker color for accessibility */
+     }
     .site-navbar a:hover {
-      color: #3d3f45; }
+      color: #2c2e33; }
   .site-navbar .icon {
     font-size: 20px; }
   .site-navbar .site-top-icons ul, .site-navbar .site-top-icons ul li {

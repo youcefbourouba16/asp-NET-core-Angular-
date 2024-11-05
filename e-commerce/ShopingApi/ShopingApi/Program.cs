@@ -12,7 +12,8 @@ using ShopingApi.Repository;
 using ShopingApi.Services;
 using System.Text;
 using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.SpaServices.Extensions; // <-- Add this
+using Microsoft.AspNetCore.SpaServices.Extensions;
+using Microsoft.AspNetCore.ResponseCompression; // <-- Add this
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -97,9 +98,17 @@ builder.Services.AddCors(options =>
 });
 });
 
+builder.Services.AddResponseCompression(options =>
+{
+    options.EnableForHttps = true;
+    options.Providers.Add<GzipCompressionProvider>();
+    options.Providers.Add<BrotliCompressionProvider>();
+});
+
 
 
 var app = builder.Build();
+app.UseResponseCompression();
 
 app.UseCors("FrontendUI");
 

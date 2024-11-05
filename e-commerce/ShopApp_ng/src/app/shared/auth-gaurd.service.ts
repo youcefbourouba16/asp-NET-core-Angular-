@@ -18,11 +18,12 @@ export class AuthGuard implements CanActivate {
     if (this.authService.isAuthenticated()) {
       // If the user is authenticated and trying to access the login page, redirect them to the disconnect page
       if (isLoginRoute) {
-        if (confirm('Are you sure you want to Log Out?')) {
-          localStorage.removeItem('token');
+        // if (confirm('Are you sure you want to Log Out?')) {
+        //   localStorage.removeItem('token');
 
-          return true;
-        }
+        //   return true;
+        // }
+        this.router.navigate(['/login']);
         
           return false;
         
