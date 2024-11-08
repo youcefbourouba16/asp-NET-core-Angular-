@@ -2,8 +2,8 @@
 body {
   line-height: 1.7;
   color: #8c92a0;
-  color: #4a4f57; /* Darker color for better contrast */
-  font-weight: 300;
+  color: #000000; /* Darker color for better contrast */
+  font-weight: 400;
   font-size: 16px; }
 
 ::-moz-selection {
@@ -459,7 +459,7 @@ color: #005bb5; /* Slightly darker on hover */	}
     height: calc(100vh - 174px); }
   .site-blocks-cover h1 {
     font-size: 30px;
-    font-weight: 900;
+    font-weight: 600;
     color: #000; }
     @media (min-width: 768px) {
       .site-blocks-cover h1 {
@@ -756,5 +756,3 @@ color: #005bb5; /* Slightly darker on hover */	}
   width: 120px;
   border-radius: 50%;
   margin-bottom: 20px; }
-
-  
