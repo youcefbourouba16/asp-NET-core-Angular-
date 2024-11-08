@@ -91,7 +91,7 @@ builder.Services.AddCors(options =>
         policy =>
         {
             //policy.WithOrigins("http://www.youcefbourouba.somee.com")
-            policy.WithOrigins("http://youcefbourouba.somee.com", "http://localhost:4200")
+            policy.WithOrigins("http://shoopers.somee.com", "http://localhost:4200")
                   .AllowCredentials()
                   .AllowAnyHeader()
                   .AllowAnyMethod();

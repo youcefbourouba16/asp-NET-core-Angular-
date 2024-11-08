@@ -37,13 +37,19 @@
             ],
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",
-              
-              "src/assets/fonts/icomoon/style.css",
               "src/assets/css/bootstrap.min.css",
-              "src/assets/css/style.css",
-              "node_modules/ngx-toastr/toastr.css"
+              "src/assets/fonts/icomoon/style.css",
+              "src/assets/css/magnific-popup.css",
+              "src/assets/css/owl.carousel.min.css",
+              "src/assets/css/aos.css",
+              "src/assets/css/style.css"
             ],
             "scripts": [
+              "src/assets/js/jquery-3.3.1.min.js",
+              "src/assets/js/jquery-ui.js",
+              "src/assets/js/owl.carousel.min.js",
+              "src/assets/js/aos.js",
+              "src/assets/js/main.js"
             ],
             "server": "src/main.server.ts",
             "prerender": true,
@@ -114,9 +120,21 @@
             ],
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.css"
+              "@angular/material/prebuilt-themes/indigo-pink.css",
+              "src/assets/css/bootstrap.min.css",
+              "src/assets/fonts/icomoon/style.css",
+              "src/assets/css/magnific-popup.css",
+              "src/assets/css/owl.carousel.min.css",
+              "src/assets/css/aos.css",
+              "src/assets/css/style.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/js/jquery-3.3.1.min.js",
+              "src/assets/js/jquery-ui.js",
+              "src/assets/js/owl.carousel.min.js",
+              "src/assets/js/aos.js",
+              "src/assets/js/main.js"
+            ]
           }
         }
       }

@@ -47,6 +47,15 @@ namespace ShopingApi.Data
                 .WithMany(c => c.OrderItems)
                 .HasForeignKey(ic => ic.OrderId);
 
+            // Configure decimal precision for Order.Total_Amount and OrderItem.Price
+            modelBuilder.Entity<Order>()
+                .Property(o => o.Total_Amount)
+                .HasPrecision(18, 2); // Adjust precision as needed
+
+            modelBuilder.Entity<OrderItem>()
+                .Property(oi => oi.Price)
+                .HasPrecision(18, 2); // Adjust precision as needed
+
             base.OnModelCreating(modelBuilder);
         }
 

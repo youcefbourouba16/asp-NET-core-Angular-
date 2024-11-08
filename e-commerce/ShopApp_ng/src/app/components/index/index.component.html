@@ -122,7 +122,7 @@
                   <img style="height: 246px;" [src]="product.imageURL" alt="Product Image" class="img-fluid">
                 </figure>
                 <div class="block-4-text p-4">
-                  <h3><a href="#">{{product.name}}</a></h3>
+                  <h3><a [routerLink]="['/product-detail', product.id]">{{product.name}}</a></h3>
                   <p class="mb-0">{{product.category}}</p>
                   <p class="text-primary font-weight-bold">${{product.price}}</p>
                 </div>
